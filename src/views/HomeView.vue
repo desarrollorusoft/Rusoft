@@ -283,7 +283,7 @@ export default defineComponent({
     const itemWidth = ref(160); // Ancho de cada elemento
     const gap = ref(16); // Espacio entre elementos
     const autoPlayInterval = ref<number | null>(null);
-    const animationSpeed = ref(0.04); // Velocidad de animación en px por frame
+    const animationSpeed = ref(0.01); // Velocidad de animación en px por frame (75% más lento que la original)
 
     // Función para obtener el icono de cada servicio
     const getServiceIcon = (serviceName: string) => {
@@ -500,15 +500,15 @@ export default defineComponent({
       if (width <= 480) {
         itemWidth.value = 180;
         gap.value = 12;
-        animationSpeed.value = 0.015;
+        animationSpeed.value = 0.00375; // 75% más lento que la original (era 0.015)
       } else if (width <= 768) {
         itemWidth.value = 170;
         gap.value = 14;
-        animationSpeed.value = 0.025;
+        animationSpeed.value = 0.00625; // 75% más lento que la original (era 0.025)
       } else {
         itemWidth.value = 160;
         gap.value = 16;
-        animationSpeed.value = 0.04;
+        animationSpeed.value = 0.01; // 75% más lento que la original (era 0.04)
       }
     };
     
