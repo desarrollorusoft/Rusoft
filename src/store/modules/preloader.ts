@@ -95,11 +95,7 @@ const preloaderModule: Module<PreloaderState, any> = {
   actions: {
     async initializePreloader({ commit, dispatch }) {
       commit('SET_START_TIME', Date.now());
-      
-      if (preloaderConfig.debug) {
-        console.log('🚀 Iniciando precarga de assets...');
-      }
-      
+
       // Función auxiliar para crear assets
       const createAsset = (src: string, type: 'image' | 'video', name: string): AssetItem => ({
         src,
@@ -170,11 +166,6 @@ const preloaderModule: Module<PreloaderState, any> = {
         const elapsedTime = Date.now() - state.startTime;
         const remainingTime = Math.max(0, preloaderConfig.minDisplayTime - elapsedTime);
         
-        if (preloaderConfig.debug) {
-          console.log(`⏱️ Tiempo transcurrido: ${elapsedTime}ms`);
-          console.log(`⏳ Tiempo restante mínimo: ${remainingTime}ms`);
-        }
-        
         // Esperar el tiempo restante si es necesario
         if (remainingTime > 0) {
           await new Promise(resolve => setTimeout(resolve, remainingTime));
@@ -183,14 +174,8 @@ const preloaderModule: Module<PreloaderState, any> = {
         // Pausa adicional al completar
         await new Promise(resolve => setTimeout(resolve, preloaderConfig.completionDelay));
         
-        if (preloaderConfig.debug) {
-          console.log('✅ Precarga completada exitosamente');
-        }
-        
         commit('SET_LOADING', false);
-      } catch (error) {
-        console.error('❌ Error durante la precarga:', error);
-        // Aún así, continuar con la carga después de un tiempo mínimo
+      } catch {
         await new Promise(resolve => setTimeout(resolve, preloaderConfig.minDisplayTime));
         commit('SET_LOADING', false);
       }
@@ -200,18 +185,8 @@ const preloaderModule: Module<PreloaderState, any> = {
       return new Promise((resolve, reject) => {
         commit('SET_CURRENT_ASSET', asset.name);
 
-        if (preloaderConfig.debug) {
-          console.log(`📦 Cargando ${asset.type}: ${asset.name}`);
-        }
-
         // Timeout individual de 10 segundos por asset
         const assetTimeout = setTimeout(() => {
-          const timeoutMsg = `⏰ Timeout cargando ${asset.type}: ${asset.name}`;
-          if (asset.critical) {
-            console.error(timeoutMsg);
-          } else {
-            console.warn(timeoutMsg);
-          }
           commit('MARK_ASSET_LOADED', asset.src);
           resolve(null);
         }, 10000);
@@ -221,21 +196,12 @@ const preloaderModule: Module<PreloaderState, any> = {
           
           img.onload = () => {
             clearTimeout(assetTimeout);
-            if (preloaderConfig.debug) {
-              console.log(`✅ Imagen cargada: ${asset.name}`);
-            }
             commit('MARK_ASSET_LOADED', asset.src);
             resolve(img);
           };
           
           img.onerror = () => {
             clearTimeout(assetTimeout);
-            const errorMsg = `❌ Error cargando imagen: ${asset.name}`;
-            if (asset.critical) {
-              console.error(errorMsg);
-            } else {
-              console.warn(errorMsg);
-            }
             commit('MARK_ASSET_LOADED', asset.src);
             resolve(null);
           };
@@ -246,21 +212,12 @@ const preloaderModule: Module<PreloaderState, any> = {
           
           video.addEventListener('canplaythrough', () => {
             clearTimeout(assetTimeout);
-            if (preloaderConfig.debug) {
-              console.log(`✅ Video cargado: ${asset.name}`);
-            }
             commit('MARK_ASSET_LOADED', asset.src);
             resolve(video);
           });
           
           video.addEventListener('error', () => {
             clearTimeout(assetTimeout);
-            const errorMsg = `❌ Error cargando video: ${asset.name}`;
-            if (asset.critical) {
-              console.error(errorMsg);
-            } else {
-              console.warn(errorMsg);
-            }
             commit('MARK_ASSET_LOADED', asset.src);
             resolve(null);
           });

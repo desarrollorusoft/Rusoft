@@ -4,14 +4,16 @@
       <div class="footer-content">
         <div class="footer-info">
           <div class="footer-item">
-            <span class="footer-label">{{ $t('footer.location_label') }}:</span>
+            <span class="footer-label">{{ $t('footer.location_label') }}</span>
             <span class="footer-value">{{ $t('footer.location_value') }}</span>
           </div>
+          <div class="footer-divider"></div>
           <div class="footer-item">
-            <span class="footer-label">{{ $t('footer.email_label') }}:</span>
+            <span class="footer-label">{{ $t('footer.email_label') }}</span>
             <a href="mailto:rusoft@rusoft.com.ar" class="footer-link">rusoft@rusoft.com.ar</a>
           </div>
         </div>
+        <div class="footer-separator"></div>
         <div class="copy">{{ $t('footer.copyright') }}</div>
       </div>
     </div>
@@ -21,17 +23,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-export default defineComponent({
-  name: "AppFooter",
-});
+export default defineComponent({ name: "AppFooter" });
 </script>
 
 <style scoped>
 .app-footer {
   background: #0b0f14;
-  color: #c9d3df;
-  padding: 32px 20px;
-  margin-top: 0;
+  color: #94a3b8;
+  padding: 40px 20px 28px;
 }
 
 .container {
@@ -42,77 +41,82 @@ export default defineComponent({
 .footer-content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
   align-items: center;
+  gap: 0;
 }
 
 .footer-info {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  text-align: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-divider {
+  width: 1px;
+  height: 32px;
+  background: rgba(255,255,255,0.1);
 }
 
 .footer-item {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   align-items: center;
 }
 
 .footer-label {
-  font-size: 12px;
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
   font-weight: 600;
-  color: #8b949e;
+  color: #475569;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.08em;
 }
 
 .footer-value {
+  font-family: "Inter", sans-serif;
   font-size: 14px;
-  color: #c9d3df;
+  color: #94a3b8;
+  line-height: 1.5;
 }
 
 .footer-link {
+  font-family: "Inter", sans-serif;
   font-size: 14px;
-  color: #58a6ff;
+  color: #64748b;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease;
+  display: inline-block;
 }
 
 .footer-link:hover {
-  color: #79c0ff;
-  text-decoration: underline;
+  color: var(--brand, #2dd4bf);
+  transform: translateX(2px);
+}
+
+.footer-separator {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.06);
+  margin: 24px 0 20px;
 }
 
 .copy {
-  font-size: 14px;
-  opacity: 0.8;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  color: #475569;
   text-align: center;
-  border-top: 1px solid #21262d;
-  padding-top: 20px;
-  width: 100%;
+  line-height: 1.6;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 480px) {
   .footer-info {
-    flex-direction: row;
-    gap: 40px;
+    flex-direction: column;
+    gap: 16px;
   }
-  
-  .footer-item {
-    flex-direction: row;
-    gap: 8px;
-    align-items: center;
-  }
-  
-  .footer-label {
-    font-size: 13px;
-  }
-  
-  .footer-value,
-  .footer-link {
-    font-size: 15px;
-  }
+
+  .footer-divider { display: none; }
 }
 </style>

@@ -17,6 +17,10 @@
         </div>
       </div>
       <div class="hero-overlay"></div>
+      <!-- Scroll indicator -->
+      <div class="hero-scroll-indicator">
+        <span></span>
+      </div>
     </section>
 
 
@@ -107,7 +111,7 @@
             :class="{ 
               'animate-service': isServicesVisible 
             }"
-            :style="{ animationDelay: isServicesVisible ? `${index * 0.1}s` : '0s' }"
+            :style="{ animationDelay: isServicesVisible ? `${index * 0.05}s` : '0s' }"
           >
             <div class="service-icon">
               <svg 
@@ -145,7 +149,7 @@
               'animate-tech-left': index % 2 === 0 && isTechVisible, 
               'animate-tech-right': index % 2 === 1 && isTechVisible 
             }"
-            :style="{ animationDelay: isTechVisible ? `${index * 0.1}s` : '0s' }"
+            :style="{ animationDelay: isTechVisible ? `${index * 0.05}s` : '0s' }"
           >
             <div class="tech-icon">
               <svg 
@@ -207,7 +211,7 @@
         <!-- Otros clientes (carrusel) -->
         <h3 class="clients-subtitle">{{ $t('pages.home.clients.more_title') }}</h3>
         <div class="clients-carousel-container">
-          <div class="clients-carousel" ref="carousel">
+          <div class="clients-carousel" ref="carousel" @mouseenter="pauseAnimation" @mouseleave="resumeAnimation">
             <div 
               class="clients-carousel-track"
               :style="{ transform: `translateX(-${currentPosition}px)` }"
@@ -668,145 +672,96 @@ export default defineComponent({
       // Carrusel
       carousel,
       currentPosition,
+      pauseAnimation,
+      resumeAnimation,
     };
   },
 });
 </script>
 
 <style scoped>
-/* Animaciones de entrada */
+/* =============================================
+   ANIMACIONES
+   ============================================= */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slideInFromLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-60px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes slideInFromRight {
-  from {
-    opacity: 0;
-    transform: translateX(100px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(60px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes techFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(16px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes slideInFromLeftTech {
-  from {
-    opacity: 0;
-    transform: translateX(-80px) scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
+  from { opacity: 0; transform: translateX(-50px) scale(0.95); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
 }
 
 @keyframes slideInFromRightTech {
-  from {
-    opacity: 0;
-    transform: translateX(80px) scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
+  from { opacity: 0; transform: translateX(50px) scale(0.95); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
 }
 
 @keyframes slideInFromBottom {
-  from {
-    opacity: 0;
-    transform: translateY(50px) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Cards de servicios */
 .service-card {
   opacity: 0;
-  transform: translateY(50px) scale(0.9);
-  transition: transform 0.8s ease, box-shadow 0.8s ease;
+  transform: translateY(30px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
   text-align: center;
+  border: 1px solid rgba(255,255,255,0.08) !important;
 }
 
 .service-card.animate-service {
-  animation: slideInFromBottom 0.8s ease-out forwards;
+  animation: slideInFromBottom 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Efecto zoom sutil al hacer hover */
 .service-card:hover {
-  transform: translateY(-8px) scale(1.06) !important;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
-  will-change: transform, box-shadow;
+  transform: translateY(-4px) !important;
+  border-color: rgba(45, 212, 191, 0.3) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 0 20px rgba(45, 212, 191, 0.08) !important;
   cursor: pointer;
   z-index: 1;
 }
 
 .service-icon {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 20px auto;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #3b82f6;
-  transition: all 0.3s ease;
+  background: rgba(45, 212, 191, 0.1);
+  border-radius: 14px;
+  color: #2dd4bf;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .service-card:hover .service-icon {
-  color: #1d4ed8;
-  transform: scale(1.1);
+  background: rgba(45, 212, 191, 0.18);
+  transform: scale(1.08);
 }
 
 /* Grid de tecnologías */
@@ -822,62 +777,65 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 16px;
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 18px 14px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 12px;
-  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.8s cubic-bezier(0.4, 0, 0.2, 1), background 0.8s ease, border-color 0.8s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.3s ease,
+              border-color 0.3s ease;
   opacity: 0;
-  transform: translateX(-80px) scale(0.8);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  transform: translateX(-50px) scale(0.95);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .tech-item.animate-tech-left {
-  animation: slideInFromLeftTech 0.8s ease-out forwards;
+  animation: slideInFromLeftTech 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .tech-item.animate-tech-right {
-  animation: slideInFromRightTech 0.8s ease-out forwards;
+  animation: slideInFromRightTech 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .tech-item:hover {
-  transform: translateY(-8px) scale(1.08) !important;
-  background: rgba(255, 255, 255, 0.6);
-  border-color: #2dd4bf;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.28);
-  will-change: transform, box-shadow;
+  transform: translateY(-4px) scale(1.05) !important;
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(45, 212, 191, 0.45);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   z-index: 1;
 }
 
 .tech-icon {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 12px;
-  color: #3b82f6;
-  transition: all 0.3s ease;
+  margin-bottom: 10px;
+  color: rgba(255,255,255,0.75);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .tech-item:hover .tech-icon {
-  color: #1d4ed8;
-  transform: scale(1.1);
+  color: #2dd4bf;
+  transform: scale(1.12);
 }
 
 .tech-name {
-  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
   font-weight: 600;
   text-align: center;
   margin: 0;
-  color: rgb(5, 44, 89);
-  transition: all 0.3s ease;
+  color: rgba(255,255,255,0.85);
+  transition: color 0.3s ease;
 }
 
 .tech-item:hover .tech-name {
-  color: inherit;
+  color: #ffffff;
 }
 
 .clients-list {
@@ -988,19 +946,21 @@ export default defineComponent({
   display: grid;
   grid-template-columns: 160px 1fr;
   align-items: start;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid #e5e7eb;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0,0,0,0.07);
   border-radius: 16px;
   padding: 24px;
   opacity: 0;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
 }
 
 .client-featured-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
-  border-color: #2dd4bf;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12), 0 0 20px rgba(45,212,191,0.08);
+  border-color: rgba(45,212,191,0.35);
 }
 
 .client-featured-logo {
@@ -1071,6 +1031,30 @@ export default defineComponent({
   max-width: 80%;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Fade edges izquierda y derecha */
+.clients-carousel-container::before,
+.clients-carousel-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.clients-carousel-container::before {
+  left: 0;
+  background: linear-gradient(to right, rgba(248,250,252,0.85), transparent);
+  border-radius: 16px 0 0 16px;
+}
+
+.clients-carousel-container::after {
+  right: 0;
+  background: linear-gradient(to left, rgba(248,250,252,0.85), transparent);
+  border-radius: 0 16px 16px 0;
 }
 
 .clients-carousel {

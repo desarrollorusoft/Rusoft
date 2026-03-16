@@ -175,48 +175,66 @@ label {
 
 .input-control {
   width: 100%;
-  padding: 14px 16px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(10, 14, 20, 0.8);
+  padding: 13px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(10, 14, 20, 0.75);
   color: #ffffff;
-  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
   outline: none;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.input-control::placeholder {
+  color: rgba(255,255,255,0.35);
+}
+
+.input-control:hover {
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .input-control:focus {
-  border-color: #7dd3fc;
-  background: rgba(10, 14, 20, 0.8);
-  box-shadow: 0 0 0 3px rgba(125, 211, 252, 0.3);
-  transform: translateY(-2px);
+  border-color: #2dd4bf;
+  background: rgba(10, 14, 20, 0.85);
+  box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2);
+  transform: translateY(-1px);
 }
 
 .button-primary {
-  margin-top: 14px;
+  margin-top: 16px;
   width: 100%;
-  padding: 12px 16px;
-  background: #495057;
-  color: #ffffff;
+  padding: 14px 16px;
+  background: #2dd4bf;
+  color: #0b0f14;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
   font-weight: 700;
+  font-size: 15px;
   cursor: pointer;
-  transition: transform 0.05s ease, filter 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: 0.01em;
 }
 
 .button-primary:hover {
-  filter: brightness(1.05);
+  background: #14b8a4;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.35);
 }
 
 .button-primary:active {
-  transform: translateY(1px);
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(45, 212, 191, 0.2);
 }
 
 .button-primary:disabled {
-  opacity: 0.65;
+  opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .msg-success {
@@ -275,42 +293,7 @@ label {
   animation: scaleIn 0.6s ease-out 0.6s both;
 }
 
-/* Animación para los inputs cuando se enfocan */
-.input-control {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.input-control:focus {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(125, 211, 252, 0.3);
-}
-
-/* Animación para el botón */
-.button-primary {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.button-primary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s;
-}
-
-.button-primary:hover::before {
-  left: 100%;
-}
-
-.button-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
-}
+/* Animaciones de entrada */
 
 /* Animación para los mensajes de éxito/error */
 .msg-success,

@@ -187,18 +187,31 @@
 
 .valor-card {
   padding: 24px;
-  background-color: #f8fafc;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  border: 1px solid rgba(0,0,0,0.07);
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+
+.valor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1), 0 0 16px rgba(45,212,191,0.08);
+  border-color: rgba(45,212,191,0.3);
 }
 
 .valor-title {
-  font-weight: 600;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
   color: #052c59;
-  margin: 0 0 8px 0;
+  margin: 0 0 10px 0;
 }
 
 .valor-text {
+  font-family: "Inter", sans-serif;
   color: #475569;
   font-size: 0.875rem;
   line-height: 1.75;

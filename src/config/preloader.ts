@@ -15,7 +15,7 @@ export interface PreloaderConfig {
 export const preloaderConfig: PreloaderConfig = {
   minDisplayTime: 1500, // Mínimo 1.5 segundos de visualización
   completionDelay: 500, // 500ms de pausa al completar
-  debug: process.env.NODE_ENV === 'development',
+  debug: false,
   criticalAssets: [
     'video-fondo.mp4',
     'logo.png',

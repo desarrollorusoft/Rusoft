@@ -33,7 +33,6 @@ export default defineComponent({
       await store.dispatch('app/initializePreloader');
     });
 
-    // Re-apply SEO meta tags when language changes
     watch(locale, () => {
       if (route.name) applyRouteMeta(route.name as string);
     });
@@ -44,20 +43,8 @@ export default defineComponent({
 </script>
 
 <style>
-/* estilos globales en base.css */
-
 .app-content {
-  animation: fadeInContent 0.8s ease-in-out;
+  animation: fadeInContent 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-@keyframes fadeInContent {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 </style>
