@@ -29,7 +29,11 @@
       <div class="process-container">
         <div class="process-grid">
           <div class="process-content" :class="{ 'animate-left': isProcessVisible }">
-            <h2 ref="processTitle" class="process-title">{{ $t('pages.home.process.title') }}</h2>
+            <div class="clients-wall-header" style="margin: 0 0 12px;">
+              <div class="clients-wall-line"></div>
+              <span ref="processTitle" class="clients-wall-label">{{ $t('pages.home.process.title') }}</span>
+              <div class="clients-wall-line"></div>
+            </div>
             <p class="process-subtitle">{{ $t('pages.home.process.subtitle') }}</p>
 
             <ol class="process-steps-list">
@@ -94,7 +98,11 @@
 
     <section id="servicios" class="section bg-alt servicios-clave-bg">
       <div class="container">
-        <h2 ref="servicesTitle" style="margin-top: 0; text-align: center; margin-bottom: 40px">{{ services.title }}</h2>
+        <div class="clients-wall-header" style="margin: 0 0 40px;">
+          <div class="clients-wall-line"></div>
+          <span ref="servicesTitle" class="clients-wall-label">{{ services.title }}</span>
+          <div class="clients-wall-line"></div>
+        </div>
         <div
           class="grid services-grid"
           style="
@@ -137,9 +145,11 @@
     <!-- Sección de Tecnologías -->
     <section class="section bg-tech">
       <div class="container">
-        <h2 ref="techTitle" style="margin-top: 0; text-align: center; margin-bottom: 40px">
-          {{ $t('pages.home.tech.title') }}
-        </h2>
+        <div class="clients-wall-header clients-wall-header--light" style="margin: 0 0 40px;">
+          <div class="clients-wall-line clients-wall-line--light"></div>
+          <span ref="techTitle" class="clients-wall-label clients-wall-label--light">{{ $t('pages.home.tech.title') }}</span>
+          <div class="clients-wall-line clients-wall-line--light"></div>
+        </div>
         <div class="tech-grid">
           <div 
             v-for="(tech, index) in technologies" 
@@ -173,62 +183,58 @@
 
     <section class="section clientes-bg">
       <div class="container">
-        <h2 ref="clientsTitle" style="margin-top: 0; text-align: center; margin-bottom: 40px">
-          {{ $t('pages.home.clients.title') }}
-        </h2>
 
-        <!-- Clientes destacados -->
-        <div class="clients-featured-grid" ref="clientsSection">
-          <article 
-            v-for="(client, index) in featuredClients" 
-            :key="client.name" 
-            class="client-featured-card"
-            :class="{ 'animate-left': index % 2 === 0 && isVisible, 'animate-right': index % 2 === 1 && isVisible }"
-            :style="{ animationDelay: isVisible ? `${index * 0.15}s` : '0s' }"
+        <!-- Header -->
+        <div class="clients-wall-header" style="margin: 0 0 32px;">
+          <div class="clients-wall-line"></div>
+          <span ref="clientsTitle" class="clients-wall-label">{{ $t('pages.home.clients.title') }}</span>
+          <div class="clients-wall-line"></div>
+        </div>
+        <h2 class="clients-title">{{ $t('pages.home.clients.subtitle') }}</h2>
+
+        <!-- Cards destacadas -->
+        <div class="clients-featured-grid">
+          <article
+            v-for="(client, index) in featuredClients"
+            :key="client.name"
+            class="client-card"
+            :class="{ 'client-card--visible': isVisible }"
+            :style="{ transitionDelay: isVisible ? `${index * 0.08}s` : '0s' }"
           >
-            <div class="client-featured-logo">
-              <img :src="client.logo" :alt="$t('pages.home.clients.logo_alt', { name: client.name })" loading="lazy" />
+            <div class="client-card__logo-wrap">
+              <img :src="client.logo" :alt="client.name" loading="lazy" />
             </div>
-            <div class="client-featured-info">
-              <h3 class="client-featured-name">{{ client.name }}</h3>
-              <template v-if="client.highlights && client.highlights.length">
-                <ul class="client-featured-list">
-                  <li v-for="(point, i) in client.highlights" :key="i" class="cf-item">
-                    <span class="cf-icon" aria-hidden="true">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 6L9 17l-5-5"></path>
-                      </svg>
-                    </span>
-                    <span class="cf-text">{{ point }}</span>
-                  </li>
-                </ul>
-              </template>
-              <p v-else class="client-featured-description"></p>
+            <div class="client-card__body">
+              <h3 class="client-card__name">{{ client.name }}</h3>
+              <ul class="client-card__list" v-if="client.highlights && client.highlights.length">
+                <li v-for="(point, i) in client.highlights" :key="i" class="client-card__item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+                  <span>{{ point }}</span>
+                </li>
+              </ul>
             </div>
           </article>
         </div>
 
-        <!-- Otros clientes (carrusel) -->
-        <h3 class="clients-subtitle">{{ $t('pages.home.clients.more_title') }}</h3>
-        <div class="clients-carousel-container">
-          <div class="clients-carousel" ref="carousel" @mouseenter="pauseAnimation" @mouseleave="resumeAnimation">
-            <div 
-              class="clients-carousel-track"
-              :style="{ transform: `translateX(-${currentPosition}px)` }"
-            >
-              <div 
-                v-for="(client, index) in infiniteClients" 
-                :key="`${client.name}-${index}`" 
-                class="client-logo-item"
-                :title="client.name"
-              >
-                <div class="client-logo-only">
-                  <img :src="client.logo" :alt="$t('pages.home.clients.logo_alt', { name: client.name })" loading="lazy" />
-                </div>
-              </div>
-            </div>
+        <!-- Logo wall -->
+        <div class="clients-wall-header">
+          <div class="clients-wall-line"></div>
+          <span class="clients-wall-label">{{ $t('pages.home.clients.more_title') }}</span>
+          <div class="clients-wall-line"></div>
+        </div>
+        <div class="clients-logo-wall">
+          <div
+            v-for="(client, index) in otherClients"
+            :key="client.name"
+            class="logo-tile"
+            :class="{ 'logo-tile--visible': isVisible }"
+            :style="{ transitionDelay: isVisible ? `${(index + featuredClients.length) * 0.06}s` : '0s' }"
+            :title="client.name"
+          >
+            <img :src="client.logo" :alt="client.name" loading="lazy" />
           </div>
         </div>
+
       </div>
     </section>
   </main>
@@ -276,14 +282,7 @@ export default defineComponent({
     const techTitle = ref<HTMLElement | null>(null);
     const processTitle = ref<HTMLElement | null>(null);
     const servicesTitle = ref<HTMLElement | null>(null);
-    
-    // Carrusel de clientes
-    const carousel = ref<HTMLElement | null>(null);
-    const currentPosition = ref(0);
-    const itemWidth = ref(160); // Ancho de cada elemento
-    const gap = ref(16); // Espacio entre elementos
-    const autoPlayInterval = ref<number | null>(null);
-    const animationSpeed = ref(0.04); // Velocidad de animación en px por frame
+
 
     // Función para obtener el icono de cada servicio (por clave)
     const getServiceIcon = (key: string) => {
@@ -469,60 +468,7 @@ export default defineComponent({
       clients.value.filter(c => !FEATURED_KEYS.includes(c.key))
     );
 
-    // Crear carrusel infinito con múltiples copias
-    const infiniteClients = computed(() => [
-      ...otherClients.value,
-      ...otherClients.value,
-      ...otherClients.value,
-    ]);
     
-    // Función para actualizar configuración del carrusel según el tamaño de pantalla
-    const updateCarouselConfig = () => {
-      const width = window.innerWidth;
-      if (width <= 480) {
-        itemWidth.value = 180;
-        gap.value = 12;
-        animationSpeed.value = 0.015;
-      } else if (width <= 768) {
-        itemWidth.value = 170;
-        gap.value = 14;
-        animationSpeed.value = 0.025;
-      } else {
-        itemWidth.value = 160;
-        gap.value = 16;
-        animationSpeed.value = 0.04;
-      }
-    };
-    
-    // Función para animar el carrusel de forma continua
-    const animateCarousel = () => {
-      const totalItemWidth = itemWidth.value + gap.value;
-      const resetPosition = otherClients.value.length * totalItemWidth;
-      
-      currentPosition.value += animationSpeed.value;
-      
-      // Reset cuando llega al final de la primera copia
-      if (currentPosition.value >= resetPosition) {
-        currentPosition.value = 0;
-      }
-      
-      requestAnimationFrame(animateCarousel);
-    };
-    
-    // Función para pausar la animación
-    const pauseAnimation = () => {
-      if (autoPlayInterval.value) {
-        clearInterval(autoPlayInterval.value);
-        autoPlayInterval.value = null;
-      }
-    };
-    
-    // Función para reanudar la animación
-    const resumeAnimation = () => {
-      if (!autoPlayInterval.value) {
-        autoPlayInterval.value = setInterval(animateCarousel, 16); // 60fps
-      }
-    };
 
     // Intersection Observer para activar animaciones cuando las secciones sean visibles
     let clientsObserver: IntersectionObserver | null = null;
@@ -531,10 +477,6 @@ export default defineComponent({
     let servicesObserver: IntersectionObserver | null = null;
 
     onMounted(() => {
-      // Configurar carrusel
-      updateCarouselConfig();
-      resumeAnimation();
-      
       // Observer para la sección de proceso
       if (processTitle.value) {
         processObserver = new IntersectionObserver(
@@ -627,20 +569,11 @@ export default defineComponent({
     });
 
     onUnmounted(() => {
-      if (clientsObserver) {
-        clientsObserver.disconnect();
-      }
-      if (techObserver) {
-        techObserver.disconnect();
-      }
-      if (processObserver) {
-        processObserver.disconnect();
-      }
-      if (servicesObserver) {
-        servicesObserver.disconnect();
-      }
+      if (clientsObserver) clientsObserver.disconnect();
+      if (techObserver) techObserver.disconnect();
+      if (processObserver) processObserver.disconnect();
+      if (servicesObserver) servicesObserver.disconnect();
       window.removeEventListener('scroll', handleScroll);
-      pauseAnimation();
     });
 
     // Control del video basado en scroll
@@ -657,7 +590,6 @@ export default defineComponent({
       clients,
       featuredClients,
       otherClients,
-      infiniteClients,
       isVisible,
       isTechVisible,
       isProcessVisible,
@@ -669,11 +601,6 @@ export default defineComponent({
       servicesTitle,
       getServiceIcon,
       handleScroll,
-      // Carrusel
-      carousel,
-      currentPosition,
-      pauseAnimation,
-      resumeAnimation,
     };
   },
 });
@@ -838,278 +765,209 @@ export default defineComponent({
   color: #ffffff;
 }
 
-.clients-list {
-  width: 100%;
-  margin: 32px 0 0;
-}
-
-.client-item {
-  display: flex;
-  align-items: center;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  padding: 32px;
-  margin-bottom: 24px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.client-item.animate-left {
-  animation: slideInFromLeft 0.8s ease-out forwards;
-}
-
-.client-item.animate-right {
-  animation: slideInFromRight 0.8s ease-out forwards;
-}
-
-/* Animaciones genéricas para cualquier elemento */
+/* Animaciones genéricas */
 .animate-left {
-  animation: slideInFromLeft 0.8s ease-out forwards;
+  animation: slideInFromLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-right {
-  animation: slideInFromRight 0.8s ease-out forwards;
+  animation: slideInFromRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.client-item:hover {
-  transform: translateX(8px) scale(1.02);
-  background: #f8fafc;
-  border-color: #2dd4bf;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
-}
+/* =============================================
+   SECCIÓN CLIENTES — rediseño moderno
+   ============================================= */
 
-.client-logo {
-  width: 140px;
-  height: 90px;
-  margin-right: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  animation: slideInLeft 0.8s ease-out 0.2s forwards;
-  opacity: 0;
-  transform: translateX(-30px);
-}
-
-.client-logo img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  transition: all 0.3s ease;
-}
-
-.client-logo:hover img {
-  transform: scale(1.05);
-}
-
-.client-info {
-  flex: 1;
-}
-
-.client-name {
-  font-size: 1.5rem;
+.clients-title {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
-  margin: 0 0 8px 0;
-  color: rgb(5, 44, 89);
-  transition: all 0.3s ease;
+  color: #0f172a;
+  margin: 0 0 36px;
+  text-align: center;
+  line-height: 1.2;
 }
 
-.client-item:hover .client-name {
-  color: #2dd4bf;
-  transform: translateX(4px);
-}
-
-.client-description {
-  font-size: 1rem;
-  line-height: 1.6;
-  margin: 0;
-  color: #6b7280;
-  transition: all 0.3s ease;
-}
-
-.client-item:hover .client-description {
-  color: #374151;
-  transform: translateX(4px);
-}
-
-/* Clientes destacados */
+/* Cards destacadas */
 .clients-featured-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(280px, 1fr));
-  gap: 24px;
-  margin-bottom: 32px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 20px;
 }
 
-.client-featured-card {
-  display: grid;
-  grid-template-columns: 160px 1fr;
-  align-items: start;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(0,0,0,0.07);
+.client-card {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 16px;
   padding: 24px;
   opacity: 0;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+  transform: translateY(20px);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.3s ease,
               border-color 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
 }
 
-.client-featured-card:hover {
+.client-card--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.client-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.12), 0 0 20px rgba(45,212,191,0.08);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1), 0 0 0 1px rgba(45,212,191,0.25);
   border-color: rgba(45,212,191,0.35);
 }
 
-.client-featured-logo {
-  width: 160px;
-  height: 120px;
+.client-card__logo-wrap {
+  flex-shrink: 0;
+  width: 110px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 8px;
-  align-self: start;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid rgba(0,0,0,0.06);
 }
 
-.client-featured-logo img {
+.client-card__logo-wrap img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 }
 
-.client-featured-info {
-  padding-left: 16px;
+.client-card__body {
+  flex: 1;
+  min-width: 0;
 }
 
-.client-featured-name {
-  margin: 0 0 8px 0;
-  font-size: 1.25rem;
-  color: rgb(5, 44, 89);
+.client-card__name {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #052c59;
+  margin: 0 0 10px 0;
+  line-height: 1.3;
 }
 
-.client-featured-description {
-  margin: 0;
-  color: #4b5563;
-  line-height: 1.6;
-}
-
-/* Lista con íconos para destacados */
-.client-featured-list {
+.client-card__list {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.cf-item {
-  display: grid;
-  grid-template-columns: 22px 1fr;
-  align-items: start;
-  column-gap: 8px;
-  color: #374151;
-}
-
-.cf-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #10b981;
-}
-
-.cf-text {
+.client-card__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  color: #475569;
   line-height: 1.5;
 }
 
-/* Carrusel de clientes */
-.clients-carousel-container {
-  position: relative;
-  margin-top: 24px;
-  max-width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Fade edges izquierda y derecha */
-.clients-carousel-container::before,
-.clients-carousel-container::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 80px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.clients-carousel-container::before {
-  left: 0;
-  background: linear-gradient(to right, rgba(248,250,252,0.85), transparent);
-  border-radius: 16px 0 0 16px;
-}
-
-.clients-carousel-container::after {
-  right: 0;
-  background: linear-gradient(to left, rgba(248,250,252,0.85), transparent);
-  border-radius: 0 16px 16px 0;
-}
-
-.clients-carousel {
-  overflow: hidden;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  padding: 16px;
-}
-
-.clients-carousel-track {
-  display: flex;
-  gap: 16px;
-  will-change: transform;
-}
-
-.client-logo-item { 
-  display: flex; 
+.client-card__item svg {
   flex-shrink: 0;
-  width: 160px;
+  margin-top: 2px;
+  color: #2dd4bf;
 }
 
-.client-logo-only {
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
+/* Separador de secciones — estilo unificado */
+.clients-wall-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 36px 0 20px;
+}
+
+.clients-wall-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.clients-wall-label {
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+/* Variante para fondos oscuros */
+.clients-wall-line--light {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.clients-wall-label--light {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Logo wall */
+.clients-logo-wall {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.logo-tile {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
   border-radius: 12px;
+  padding: 20px 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 10px;
-  height: 100px;
-  width: 100%;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  height: 96px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease,
+              border-color 0.25s ease,
+              background 0.25s ease;
+  cursor: default;
 }
 
-.client-logo-item:hover .client-logo-only {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-  border-color: #2dd4bf;
+.logo-tile--visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.client-logo-only img {
-  max-width: 90%;
-  max-height: 80%;
+.logo-tile:hover {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1), 0 0 0 1px rgba(45,212,191,0.25);
+  border-color: rgba(45,212,191,0.35);
+  transform: translateY(-3px);
+}
+
+.logo-tile img {
+  max-width: 85%;
+  max-height: 60px;
   object-fit: contain;
-  display: block;
+  filter: grayscale(35%) opacity(0.8);
+  transition: filter 0.25s ease, transform 0.25s ease;
 }
 
-.clients-subtitle {
-  margin: 8px 0 16px 0;
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #374151;
-  opacity: 0.9;
+.logo-tile:hover img {
+  filter: grayscale(0%) opacity(1);
+  transform: scale(1.06);
 }
 
 /* Nuestro Proceso */
@@ -1132,13 +990,6 @@ export default defineComponent({
   grid-template-columns: 1.4fr 1fr;
   gap: 48px;
   align-items: center;
-}
-
-.process-title {
-  font-size: 1.875rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin: 0 0 12px 0;
 }
 
 .process-subtitle {
@@ -1231,9 +1082,6 @@ export default defineComponent({
     gap: 32px;
   }
   
-  .process-title {
-    text-align: center;
-  }
   
   .process-subtitle {
     text-align: center;
@@ -1257,9 +1105,9 @@ export default defineComponent({
     gap: 24px;
   }
   
-  .process-title {
-    font-size: 1.5rem;
-    margin-bottom: 16px;
+  .process-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 24px;
   }
   
   .process-subtitle {
@@ -1305,9 +1153,6 @@ export default defineComponent({
     padding: 0 16px;
   }
   
-  .process-title {
-    font-size: 1.3rem;
-  }
   
   .process-subtitle {
     font-size: 0.9rem;
@@ -1379,17 +1224,12 @@ export default defineComponent({
   
   .clients-featured-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
 
-  .client-featured-card {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .client-featured-info {
-    padding-left: 0;
-    margin-top: 12px;
+  .clients-logo-wall {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
   }
 
   .tech-grid {
@@ -1495,44 +1335,21 @@ export default defineComponent({
     font-size: 11px;
   }
   
-  .clients-featured-grid {
-    gap: 12px;
+  .clients-logo-wall {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
-  
-  .client-featured-card {
-    padding: 16px;
+
+  .client-card {
+    padding: 18px;
+    gap: 16px;
   }
-  
-  .client-featured-logo {
-    width: 120px;
-    height: 90px;
+
+  .client-card__logo-wrap {
+    width: 90px;
+    height: 70px;
   }
-  
-  .client-featured-name {
-    font-size: 1.1rem;
-  }
-  
-  .cf-text {
-    font-size: 0.85rem;
-  }
-  
-  .clients-carousel-container {
-    max-width: 85%;
-  }
-  
-  .clients-carousel {
-    padding: 14px;
-  }
-  
-  .client-logo-item {
-    width: 170px;
-  }
-  
-  .client-logo-only {
-    height: 90px;
-    padding: 10px 8px;
-  }
-  
+
   .hero-buttons {
     flex-direction: column;
     align-items: center;
@@ -1584,38 +1401,18 @@ export default defineComponent({
     font-size: 10px;
   }
   
-  .client-featured-card {
-    padding: 12px;
+  .clients-logo-wall {
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  .client-featured-logo {
-    width: 100px;
-    height: 80px;
+
+  .client-card {
+    padding: 14px;
+    gap: 12px;
   }
-  
-  .client-featured-name {
-    font-size: 1rem;
-  }
-  
-  .cf-text {
-    font-size: 0.8rem;
-  }
-  
-  .clients-carousel-container {
-    max-width: 90%;
-  }
-  
-  .clients-carousel {
-    padding: 12px;
-  }
-  
-  .client-logo-item {
-    width: 180px;
-  }
-  
-  .client-logo-only {
-    height: 80px;
-    padding: 8px 6px;
+
+  .client-card__logo-wrap {
+    width: 80px;
+    height: 60px;
   }
 }
 

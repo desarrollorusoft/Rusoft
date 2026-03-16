@@ -108,8 +108,43 @@ export default {
       tech: {
         title: 'Tecnologías que Dominamos',
       },
+      stats: {
+        label: 'En números',
+        clients: { value: '13+', label: 'Clientes' },
+        projects: { value: '30+', label: 'Proyectos entregados' },
+        years: { value: '5+', label: 'Años de experiencia' },
+        services: { value: '12', label: 'Servicios' },
+      },
+      testimonials: {
+        label: 'Testimonios',
+        title: 'Lo que dicen nuestros clientes',
+        items: [
+          {
+            quote: 'Rusoft ha demostrado una comprensión profunda de las necesidades de nuestros usuarios, traduciéndolas en una interfaz que es a la vez poderosa y una delicia de usar.',
+            author: 'Sofía García',
+            role: 'Directora de Producto, InnovaTech',
+          },
+          {
+            quote: 'El sistema de autogestión que desarrollaron para nosotros ha sido un cambio de juego. La eficiencia y la reducción de errores son notables. ¡Un equipo increíblemente profesional!',
+            author: 'Juan Pérez',
+            role: 'Gerente de Finanzas, Logística Total',
+          },
+          {
+            quote: 'Desde el diseño inicial hasta el despliegue final, el equipo de Rusoft fue colaborativo y transparente. Su consultoría nos ayudó a definir mejor nuestro producto y a lanzarlo con éxito.',
+            author: 'Ana Rodríguez',
+            role: 'CEO, EmprendeDigital',
+          },
+        ],
+      },
+      cta: {
+        label: 'Siguiente paso',
+        title: '¿Tenés un proyecto en mente?',
+        subtitle: 'Contanos tu idea y en menos de 48 horas te respondemos con una propuesta.',
+        button: 'Hablemos',
+      },
       clients: {
         title: 'Nuestros Clientes',
+        subtitle: 'Empresas que confían en nosotros',
         more_title: 'Más clientes',
         logo_alt: 'Logo de {name}',
         featured: {

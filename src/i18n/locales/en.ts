@@ -108,8 +108,43 @@ export default {
       tech: {
         title: 'Technologies We Master',
       },
+      stats: {
+        label: 'By the numbers',
+        clients: { value: '13+', label: 'Clients' },
+        projects: { value: '30+', label: 'Projects delivered' },
+        years: { value: '5+', label: 'Years of experience' },
+        services: { value: '12', label: 'Services' },
+      },
+      testimonials: {
+        label: 'Testimonials',
+        title: 'What our clients say',
+        items: [
+          {
+            quote: 'Rusoft demonstrated a deep understanding of our users\' needs, translating them into an interface that is both powerful and a delight to use.',
+            author: 'Sofía García',
+            role: 'Product Director, InnovaTech',
+          },
+          {
+            quote: 'The self-management system they developed for us has been a game changer. The efficiency gains and error reduction are remarkable. An incredibly professional team!',
+            author: 'Juan Pérez',
+            role: 'Finance Manager, Logística Total',
+          },
+          {
+            quote: 'From initial design to final deployment, the Rusoft team was collaborative and transparent. Their consulting helped us better define our product and launch it successfully.',
+            author: 'Ana Rodríguez',
+            role: 'CEO, EmprendeDigital',
+          },
+        ],
+      },
+      cta: {
+        label: 'Next step',
+        title: 'Got a project in mind?',
+        subtitle: 'Tell us your idea and we\'ll get back to you with a proposal in less than 48 hours.',
+        button: 'Let\'s talk',
+      },
       clients: {
         title: 'Our Clients',
+        subtitle: 'Companies that trust us',
         more_title: 'More clients',
         logo_alt: 'Logo of {name}',
         featured: {
