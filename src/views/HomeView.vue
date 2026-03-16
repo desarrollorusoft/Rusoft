@@ -1,208 +1,168 @@
 <template>
   <main>
-    <section class="hero-section">
-      <video class="hero-video" :class="{ 'video-fixed': isVideoFixed }" autoplay muted loop playsinline>
+    <!-- ========== HERO ========== -->
+    <section class="hero">
+      <video class="hero__video" :class="{ 'hero__video--fixed': isVideoFixed }" autoplay muted loop playsinline>
         <source src="@/assets/video-fondo3.mp4" type="video/mp4">
       </video>
-      <div class="hero-content">
-        <div class="hero-text">
-          <h1 class="hero-title">{{ hero.headline }}</h1>
-          <p class="hero-subtitle">{{ hero.subheadline }}</p>
-          <div class="hero-buttons">
-            <router-link to="/contacto" class="button-secondary hero-btn">{{
-              hero.primary_cta.label
-            }}</router-link>
-            <a href="#servicios" class="button-secondary hero-btn">{{ $t('pages.home.hero.cta_services') }}</a>
-          </div>
+      <div class="hero__overlay"></div>
+      <div class="hero__content">
+        <span class="hero__badge" :class="{ 'fade-in': true }">Software Factory</span>
+        <h1 class="hero__title">{{ hero.headline }}</h1>
+        <p class="hero__sub">{{ hero.subheadline }}</p>
+        <div class="hero__ctas">
+          <router-link to="/contacto" class="btn btn--primary">{{ hero.primary_cta.label }}</router-link>
+          <a href="#servicios" class="btn btn--ghost">{{ $t('pages.home.hero.cta_services') }}</a>
         </div>
       </div>
-      <div class="hero-overlay"></div>
-      <!-- Scroll indicator -->
-      <div class="hero-scroll-indicator">
-        <span></span>
+      <div class="hero__scroll">
+        <div class="hero__scroll-line"></div>
       </div>
     </section>
 
-
-    <!-- Nuestro Proceso -->
-    <section id="proceso" class="process-section">
-      <div class="process-container">
-        <div class="process-grid">
-          <div class="process-content" :class="{ 'animate-left': isProcessVisible }">
-            <div class="clients-wall-header" style="margin: 0 0 12px;">
-              <div class="clients-wall-line"></div>
-              <span ref="processTitle" class="clients-wall-label">{{ $t('pages.home.process.title') }}</span>
-              <div class="clients-wall-line"></div>
-            </div>
-            <p class="process-subtitle">{{ $t('pages.home.process.subtitle') }}</p>
-
-            <ol class="process-steps-list">
-              <li v-for="(step, i) in processSteps" :key="i" class="process-step-item">
-                <span class="process-step-number">{{ i + 1 }}</span>
-                <div class="process-step-content">
-                  <h3 class="process-step-title">{{ step.title }}</h3>
-                  <p class="process-step-text">{{ step.text }}</p>
-                </div>
-              </li>
-            </ol>
-          </div>
-          
-          <!-- Imagen del flujo de proceso -->
-          <div class="process-visual" :class="{ 'animate-right': isProcessVisible }" :style="{ transitionDelay: isProcessVisible ? '0.3s' : '0s' }">
-            <img src="@/assets/flujo.png" alt="Flujo de proceso" class="process-img" />
-          </div>
+    <!-- ========== STATS ========== -->
+    <section class="stats" ref="statsRef">
+      <div class="stats__inner">
+        <div class="stats__item" v-for="(stat, i) in stats" :key="i" :class="{ 'slide-up': isStatsVisible }" :style="{ animationDelay: `${i * 0.1}s` }">
+          <span class="stats__value">{{ stat.value }}</span>
+          <span class="stats__label">{{ stat.label }}</span>
         </div>
       </div>
     </section>
 
-    <section id="servicios" class="section bg-alt servicios-clave-bg">
+    <!-- ========== SERVICES (BENTO) ========== -->
+    <section id="servicios" class="section">
       <div class="container">
-        <div class="clients-wall-header" style="margin: 0 0 40px;">
-          <div class="clients-wall-line"></div>
-          <span ref="servicesTitle" class="clients-wall-label">{{ services.title }}</span>
-          <div class="clients-wall-line"></div>
+        <div class="section-header">
+          <span ref="servicesTitle" class="section-tag">{{ services.title }}</span>
         </div>
-        <div
-          class="grid services-grid"
-          style="
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-top: 16px;
-          "
-        >
+        <div class="bento">
           <article
             v-for="(s, index) in services.items"
-            :key="s.name"
-            class="card service-card"
+            :key="s.key"
+            class="bento__card"
             :class="{
-              'animate-service': isServicesVisible,
-              'service-card--ai': s.key === 'ai'
+              'bento__card--hero': s.key === 'ai',
+              'slide-up': isServicesVisible
             }"
-            :style="{ animationDelay: isServicesVisible ? `${index * 0.05}s` : '0s' }"
+            :style="{ animationDelay: isServicesVisible ? `${index * 0.04}s` : '0s' }"
           >
-            <span v-if="s.key === 'ai'" class="service-badge">{{ $t('pages.home.ai_section.badge') }}</span>
-            <div class="service-icon">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                v-html="getServiceIcon(s.key)"
-              ></svg>
+            <span v-if="s.key === 'ai'" class="bento__badge">{{ $t('pages.home.ai_section.badge') }}</span>
+            <div class="bento__icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="getServiceIcon(s.key)"></svg>
             </div>
-            <h3 style="margin-top: 0">{{ s.name }}</h3>
-            <p style="opacity: 0.9">{{ s.summary }}</p>
+            <h3 class="bento__title">{{ s.name }}</h3>
+            <p class="bento__text">{{ s.summary }}</p>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- Sección dedicada de IA -->
-    <section class="section ai-section">
+    <!-- ========== AI SHOWCASE ========== -->
+    <section class="section ai">
+      <div class="ai__glow"></div>
       <div class="container">
-        <div class="clients-wall-header clients-wall-header--light" style="margin: 0 0 40px;">
-          <div class="clients-wall-line clients-wall-line--light"></div>
-          <span ref="aiTitle" class="clients-wall-label clients-wall-label--light">{{ $t('pages.home.ai_section.badge') }}</span>
-          <div class="clients-wall-line clients-wall-line--light"></div>
+        <div class="section-header">
+          <span ref="aiTitle" class="section-tag">{{ $t('pages.home.ai_section.badge') }}</span>
+          <h2 class="section-title gradient-text" :class="{ 'slide-up': isAiVisible }">{{ $t('pages.home.ai_section.title') }}</h2>
+          <p class="section-sub" :class="{ 'slide-up': isAiVisible }" style="animation-delay: 0.1s">{{ $t('pages.home.ai_section.subtitle') }}</p>
         </div>
-        <div class="ai-header">
-          <h2 class="ai-title" :class="{ 'animate-fade-in': isAiVisible }">{{ $t('pages.home.ai_section.title') }}</h2>
-          <p class="ai-subtitle" :class="{ 'animate-fade-in': isAiVisible }">{{ $t('pages.home.ai_section.subtitle') }}</p>
-        </div>
-        <div class="ai-cases-grid">
-          <div
-            v-for="(caseKey, index) in aiCaseKeys"
-            :key="caseKey"
-            class="ai-case-card"
-            :class="{ 'animate-service': isAiVisible }"
-            :style="{ animationDelay: isAiVisible ? `${index * 0.1}s` : '0s' }"
-          >
-            <div class="ai-case-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="getAiCaseIcon(caseKey)"></svg>
+        <div class="ai__grid">
+          <div v-for="(caseKey, index) in aiCaseKeys" :key="caseKey" class="ai__card" :class="{ 'slide-up': isAiVisible }" :style="{ animationDelay: `${0.15 + index * 0.08}s` }">
+            <div class="ai__card-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="getAiCaseIcon(caseKey)"></svg>
             </div>
-            <h3 class="ai-case-title">{{ $t(`pages.home.ai_section.cases.${caseKey}.title`) }}</h3>
-            <p class="ai-case-text">{{ $t(`pages.home.ai_section.cases.${caseKey}.text`) }}</p>
+            <h3>{{ $t(`pages.home.ai_section.cases.${caseKey}.title`) }}</h3>
+            <p>{{ $t(`pages.home.ai_section.cases.${caseKey}.text`) }}</p>
           </div>
         </div>
-        <div class="ai-cta-wrap" :class="{ 'animate-fade-in': isAiVisible }">
-          <router-link to="/contacto" class="button-primary ai-cta-btn">{{ $t('pages.home.ai_section.cta') }}</router-link>
+        <div class="ai__cta" :class="{ 'slide-up': isAiVisible }" style="animation-delay: 0.5s">
+          <router-link to="/contacto" class="btn btn--primary">{{ $t('pages.home.ai_section.cta') }}</router-link>
         </div>
       </div>
     </section>
 
-    <!-- Sección de Tecnologías -->
-    <section class="section bg-tech">
+    <!-- ========== PROCESS ========== -->
+    <section class="section">
       <div class="container">
-        <div class="clients-wall-header clients-wall-header--light" style="margin: 0 0 40px;">
-          <div class="clients-wall-line clients-wall-line--light"></div>
-          <span ref="techTitle" class="clients-wall-label clients-wall-label--light">{{ $t('pages.home.tech.title') }}</span>
-          <div class="clients-wall-line clients-wall-line--light"></div>
+        <div class="section-header">
+          <span ref="processTitle" class="section-tag">{{ $t('pages.home.process.title') }}</span>
+          <p class="section-sub" :class="{ 'slide-up': isProcessVisible }">{{ $t('pages.home.process.subtitle') }}</p>
+        </div>
+        <div class="process">
+          <div class="process__timeline" :class="{ 'slide-up': isProcessVisible }">
+            <div class="process__line"></div>
+            <div v-for="(step, i) in processSteps" :key="i" class="process__step" :class="{ 'slide-up': isProcessVisible }" :style="{ animationDelay: `${0.1 + i * 0.12}s` }">
+              <div class="process__dot">
+                <span>{{ i + 1 }}</span>
+              </div>
+              <div class="process__body">
+                <h3>{{ step.title }}</h3>
+                <p>{{ step.text }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="process__visual" :class="{ 'slide-right': isProcessVisible }">
+            <img src="@/assets/flujo.png" alt="Flujo de proceso" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== TECH ========== -->
+    <section class="section section--alt">
+      <div class="container">
+        <div class="section-header">
+          <span ref="techTitle" class="section-tag">{{ $t('pages.home.tech.title') }}</span>
         </div>
         <div class="tech-grid">
-          <div 
-            v-for="(tech, index) in technologies" 
-            :key="tech.name"
-            class="tech-item"
-            :class="{ 
-              'animate-tech-left': index % 2 === 0 && isTechVisible, 
-              'animate-tech-right': index % 2 === 1 && isTechVisible 
-            }"
-            :style="{ animationDelay: isTechVisible ? `${index * 0.05}s` : '0s' }"
-          >
-            <div class="tech-icon">
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="32" 
-                height="32" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                stroke-width="2" 
-                stroke-linecap="round" 
-                stroke-linejoin="round"
-                v-html="tech.icon"
-              ></svg>
-            </div>
-            <p class="tech-name">{{ tech.name }}</p>
+          <div v-for="(tech, index) in technologies" :key="tech.name" class="tech-chip" :class="{ 'slide-up': isTechVisible }" :style="{ animationDelay: isTechVisible ? `${index * 0.03}s` : '0s' }">
+            <span class="tech-chip__name">{{ tech.name }}</span>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section clientes-bg">
+    <!-- ========== TESTIMONIALS ========== -->
+    <section class="section" ref="testimonialsRef">
       <div class="container">
-
-        <!-- Header -->
-        <div class="clients-wall-header" style="margin: 0 0 32px;">
-          <div class="clients-wall-line"></div>
-          <span ref="clientsTitle" class="clients-wall-label">{{ $t('pages.home.clients.title') }}</span>
-          <div class="clients-wall-line"></div>
+        <div class="section-header">
+          <span class="section-tag">{{ $t('pages.home.testimonials.label') }}</span>
+          <h2 class="section-title" :class="{ 'slide-up': isTestimonialsVisible }">{{ $t('pages.home.testimonials.title') }}</h2>
         </div>
-        <h2 class="clients-title">{{ $t('pages.home.clients.subtitle') }}</h2>
+        <div class="testimonials">
+          <div v-for="(item, i) in testimonials" :key="i" class="testimonial" :class="{ 'slide-up': isTestimonialsVisible }" :style="{ animationDelay: `${0.1 + i * 0.1}s` }">
+            <p class="testimonial__quote">"{{ item.quote }}"</p>
+            <div class="testimonial__author">
+              <div class="testimonial__avatar">{{ item.author.charAt(0) }}</div>
+              <div>
+                <strong>{{ item.author }}</strong>
+                <span>{{ item.role }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <!-- Cards destacadas -->
-        <div class="clients-featured-grid">
-          <article
-            v-for="(client, index) in featuredClients"
-            :key="client.name"
-            class="client-card"
-            :class="{ 'client-card--visible': isVisible }"
-            :style="{ transitionDelay: isVisible ? `${index * 0.08}s` : '0s' }"
-          >
-            <div class="client-card__logo-wrap">
+    <!-- ========== CLIENTS ========== -->
+    <section class="section section--alt" ref="clientsSectionRef">
+      <div class="container">
+        <div class="section-header">
+          <span ref="clientsTitle" class="section-tag">{{ $t('pages.home.clients.title') }}</span>
+          <h2 class="section-title" :class="{ 'slide-up': isVisible }">{{ $t('pages.home.clients.subtitle') }}</h2>
+        </div>
+
+        <div class="clients-grid">
+          <article v-for="(client, index) in featuredClients" :key="client.name" class="client-card" :class="{ 'slide-up': isVisible }" :style="{ animationDelay: `${0.1 + index * 0.08}s` }">
+            <div class="client-card__logo">
               <img :src="client.logo" :alt="client.name" loading="lazy" />
             </div>
             <div class="client-card__body">
-              <h3 class="client-card__name">{{ client.name }}</h3>
-              <ul class="client-card__list" v-if="client.highlights && client.highlights.length">
-                <li v-for="(point, i) in client.highlights" :key="i" class="client-card__item">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+              <h3>{{ client.name }}</h3>
+              <ul v-if="client.highlights && client.highlights.length">
+                <li v-for="(point, i) in client.highlights" :key="i">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
                   <span>{{ point }}</span>
                 </li>
               </ul>
@@ -210,25 +170,27 @@
           </article>
         </div>
 
-        <!-- Logo wall -->
-        <div class="clients-wall-header">
-          <div class="clients-wall-line"></div>
-          <span class="clients-wall-label">{{ $t('pages.home.clients.more_title') }}</span>
-          <div class="clients-wall-line"></div>
+        <div class="section-header" style="margin-top: 48px">
+          <span class="section-tag">{{ $t('pages.home.clients.more_title') }}</span>
         </div>
-        <div class="clients-logo-wall">
-          <div
-            v-for="(client, index) in otherClients"
-            :key="client.name"
-            class="logo-tile"
-            :class="{ 'logo-tile--visible': isVisible }"
-            :style="{ transitionDelay: isVisible ? `${(index + featuredClients.length) * 0.06}s` : '0s' }"
-            :title="client.name"
-          >
+        <div class="logo-wall">
+          <div v-for="(client, index) in otherClients" :key="client.name" class="logo-wall__item" :class="{ 'slide-up': isVisible }" :style="{ animationDelay: `${0.3 + index * 0.05}s` }" :title="client.name">
             <img :src="client.logo" :alt="client.name" loading="lazy" />
           </div>
         </div>
+      </div>
+    </section>
 
+    <!-- ========== CTA ========== -->
+    <section class="cta-section" ref="ctaRef">
+      <div class="cta-section__glow"></div>
+      <div class="container">
+        <span class="section-tag" style="margin-bottom: 16px">{{ $t('pages.home.cta.label') }}</span>
+        <h2 class="cta-section__title gradient-text" :class="{ 'slide-up': isCtaVisible }">{{ $t('pages.home.cta.title') }}</h2>
+        <p class="cta-section__sub" :class="{ 'slide-up': isCtaVisible }" style="animation-delay: 0.1s">{{ $t('pages.home.cta.subtitle') }}</p>
+        <div :class="{ 'slide-up': isCtaVisible }" style="animation-delay: 0.2s">
+          <router-link to="/contacto" class="btn btn--primary btn--lg">{{ $t('pages.home.cta.button') }}</router-link>
+        </div>
       </div>
     </section>
   </main>
@@ -267,19 +229,43 @@ export default defineComponent({
     const processSteps = computed(() =>
       tm('pages.home.process.steps') as Array<{ title: string; text: string }>
     );
+
+    const stats = computed(() => {
+      const s = tm('pages.home.stats') as any;
+      return [
+        { value: s.clients.value, label: s.clients.label },
+        { value: s.projects.value, label: s.projects.label },
+        { value: s.years.value, label: s.years.label },
+        { value: s.services.value, label: s.services.label },
+      ];
+    });
+
+    const testimonials = computed(() =>
+      tm('pages.home.testimonials.items') as Array<{ quote: string; author: string; role: string }>
+    );
+
+    const aiCaseKeys = ['automation', 'chatbots', 'analytics', 'integration'];
+
+    // Visibility refs
     const isVisible = ref(false);
     const isTechVisible = ref(false);
     const isProcessVisible = ref(false);
     const isServicesVisible = ref(false);
     const isAiVisible = ref(false);
+    const isStatsVisible = ref(false);
+    const isTestimonialsVisible = ref(false);
+    const isCtaVisible = ref(false);
     const isVideoFixed = ref(true);
+
+    // Element refs
     const clientsTitle = ref<HTMLElement | null>(null);
     const techTitle = ref<HTMLElement | null>(null);
     const processTitle = ref<HTMLElement | null>(null);
     const servicesTitle = ref<HTMLElement | null>(null);
     const aiTitle = ref<HTMLElement | null>(null);
-
-    const aiCaseKeys = ['automation', 'chatbots', 'analytics', 'integration'];
+    const statsRef = ref<HTMLElement | null>(null);
+    const testimonialsRef = ref<HTMLElement | null>(null);
+    const ctaRef = ref<HTMLElement | null>(null);
 
     const getAiCaseIcon = (key: string) => {
       const icons: Record<string, string> = {
@@ -291,8 +277,6 @@ export default defineComponent({
       return icons[key] || '';
     };
 
-
-    // Función para obtener el icono de cada servicio (por clave)
     const getServiceIcon = (key: string) => {
       const icons: Record<string, string> = {
         tax: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10,9 9,9 8,9"></polyline>',
@@ -308,329 +292,79 @@ export default defineComponent({
         mobile: '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>',
         process_audit: '<path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"></path><rect x="9" y="7" width="6" height="4"></rect><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>',
       };
-      return icons[key] || '<circle cx="12" cy="12" r="10"></circle><path d="M12 16V8M8 12h8"></path>';
+      return icons[key] || '<circle cx="12" cy="12" r="10"></circle>';
     };
 
     const technologies = [
-      {
-        name: "Java",
-        icon: '<path d="M12 2l6 4v12l-6 4-6-4V6l6-4z"></path><path d="M12 6l-4 2.5v7l4 2.5 4-2.5v-7L12 6z"></path>'
-      },
-      {
-        name: ".NET",
-        icon: '<path d="M12 2l-8 5v10l8 5 8-5V7l-8-5z"></path><path d="M8 12h8M12 8v8"></path>'
-      },
-      {
-        name: "PHP",
-        icon: '<path d="M16 2H8a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"></path><path d="M10 9h4"></path><path d="M10 15h4"></path>'
-      },
-      {
-        name: "Laravel",
-        icon: '<path d="M12 2l-8 5v10l8 5 8-5V7l-8-5z"></path><path d="M12 7l-4 2.5v5l4 2.5 4-2.5v-5L12 7z"></path>'
-      },
-      {
-        name: "Node.js",
-        icon: '<path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"></path><path d="M12 6.5V17.5M12 6.5L8 10.5M12 6.5L16 10.5"></path>'
-      },
-      {
-        name: "MySQL",
-        icon: '<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path>'
-      },
-      {
-        name: "SQL Server",
-        icon: '<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path>'
-      },
-      {
-        name: "Vue.js",
-        icon: '<path d="M12 22l-10-17h20l-10 17zM2.83 5.42L12 20.25l9.17-14.83H2.83z"></path><path d="M12 2l-7 12h14zM12 4l-5.5 9h11z"></path>'
-      },
-      {
-        name: "JavaScript",
-        icon: '<circle cx="12" cy="12" r="10"></circle><path d="M12 16V8M8 12h8"></path>'
-      },
-      {
-        name: "TypeScript",
-        icon: '<path d="M12 2l6 4v12l-6 4-6-4V6l6-4z"></path><path d="M12 6l-4 2.5v7l4 2.5 4-2.5v-7L12 6z"></path>'
-      },
-      {
-        name: "Python",
-        icon: '<path d="M12 2l-7 5v10l7 5 7-5V7l-7-5z"></path><path d="M8 12h8M12 8v8"></path>'
-      },
-      {
-        name: "PostgreSQL",
-        icon: '<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path>'
-      },
-      {
-        name: "Informix",
-        icon: '<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path>'
-      },
-      {
-        name: "React",
-        icon: '<path d="M12 2l-8 5v10l8 5 8-5V7l-8-5z"></path><path d="M8 12h8M12 8v8"></path>'
-      },
-      {
-        name: "Angular",
-        icon: '<path d="M12 2l-8 5v10l8 5 8-5V7l-8-5z"></path><path d="M8 12h8M12 8v8"></path>'
-      },
-      {
-        name: "Docker",
-        icon: '<path d="M12 2l-8 5v10l8 5 8-5V7l-8-5z"></path><path d="M8 12h8M12 8v8"></path>'
-      },
-      {
-        name: "AWS",
-        icon: '<path d="M12 2l-7 5v10l7 5 7-5V7l-7-5z"></path><path d="M8 12h8M12 8v8"></path>'
-      },
-      {
-        name: "Git",
-        icon: '<path d="M12 2l-8 5v10l8 5 8-5V7l-8-5z"></path><path d="M8 12h8M12 8v8"></path>'
-      }
+      { name: "Java" }, { name: ".NET" }, { name: "PHP" }, { name: "Laravel" },
+      { name: "Node.js" }, { name: "MySQL" }, { name: "SQL Server" }, { name: "Vue.js" },
+      { name: "JavaScript" }, { name: "TypeScript" }, { name: "Python" }, { name: "PostgreSQL" },
+      { name: "Informix" }, { name: "React" }, { name: "Angular" }, { name: "Docker" },
+      { name: "AWS" }, { name: "Git" },
     ];
 
     const clients = computed(() => [
-      {
-        key: 'municipalidad',
-        name: "Municipalidad Vicente López",
-        logo: require("@/assets/logos-clientes/logo-municipalidad_vicente-lopez.png"),
-        highlights: tm('pages.home.clients.featured.municipalidad.highlights') as string[],
-      },
-      {
-        key: 'enod',
-        name: "Enod",
-        logo: require("@/assets/logos-clientes/logo-enod-web.jpg"),
-        highlights: tm('pages.home.clients.featured.enod.highlights') as string[],
-      },
-      {
-        key: 'pastoriza',
-        name: "La Pastoriza",
-        logo: require("@/assets/logos-clientes/logo-la-pastoriza.jpg"),
-        highlights: tm('pages.home.clients.featured.pastoriza.highlights') as string[],
-      },
-      {
-        key: 'demarco',
-        name: "Corralón de Marco",
-        logo: require("@/assets/logos-clientes/logo_de-marco-corralon.png"),
-        highlights: tm('pages.home.clients.featured.demarco.highlights') as string[],
-      },
-      {
-        key: 'prisports',
-        name: "Pri Sports",
-        logo: require("@/assets/logos-clientes/logo-pri-sports.jpg"),
-        highlights: [] as string[],
-      },
-      {
-        key: 'arz',
-        name: "ARZ E HIJOS",
-        logo: require("@/assets/logos-clientes/logo-sanitarios-alvarez.jpg"),
-        highlights: [] as string[],
-      },
-      {
-        key: 'demarco_seco',
-        name: "De Marco contrucción en seco",
-        logo: require("@/assets/logos-clientes/logo-kanauf.png"),
-        highlights: [] as string[],
-      },
-      {
-        key: 'noria',
-        name: "La Noria",
-        logo: require("@/assets/logos-clientes/logo_la-noria_revistimiento.png"),
-        highlights: [] as string[],
-      },
-      {
-        key: 'magimundo',
-        name: "Magimundo",
-        logo: require("@/assets/logos-clientes/logo_magimundo_color.png"),
-        highlights: [] as string[],
-      },
-      {
-        key: 'aberturas',
-        name: "Aberturas 3 de Febrero",
-        logo: require("@/assets/logos-clientes/logo_abertura-3-febrero-r8_color.png"),
-        highlights: [] as string[],
-      },
-      {
-        key: 'enfoque',
-        name: "Enfoque Pop",
-        logo: require("@/assets/logos-clientes/logo-enfoque-pop.jpg"),
-        highlights: [] as string[],
-      },
-      {
-        key: 'herrajes',
-        name: "Herrajes Mitre",
-        logo: require("@/assets/logos-clientes/logo-herrajes-mitre.png"),
-        highlights: [] as string[],
-      },
-      {
-        key: 'pintureria',
-        name: "Pinturería San Andrés",
-        logo: require("@/assets/logos-clientes/logo_pintureria-san-andres.png"),
-        highlights: [] as string[],
-      },
+      { key: 'municipalidad', name: "Municipalidad Vicente López", logo: require("@/assets/logos-clientes/logo-municipalidad_vicente-lopez.png"), highlights: tm('pages.home.clients.featured.municipalidad.highlights') as string[] },
+      { key: 'enod', name: "Enod", logo: require("@/assets/logos-clientes/logo-enod-web.jpg"), highlights: tm('pages.home.clients.featured.enod.highlights') as string[] },
+      { key: 'pastoriza', name: "La Pastoriza", logo: require("@/assets/logos-clientes/logo-la-pastoriza.jpg"), highlights: tm('pages.home.clients.featured.pastoriza.highlights') as string[] },
+      { key: 'demarco', name: "Corralón de Marco", logo: require("@/assets/logos-clientes/logo_de-marco-corralon.png"), highlights: tm('pages.home.clients.featured.demarco.highlights') as string[] },
+      { key: 'prisports', name: "Pri Sports", logo: require("@/assets/logos-clientes/logo-pri-sports.jpg"), highlights: [] as string[] },
+      { key: 'arz', name: "ARZ E HIJOS", logo: require("@/assets/logos-clientes/logo-sanitarios-alvarez.jpg"), highlights: [] as string[] },
+      { key: 'demarco_seco', name: "De Marco contrucción en seco", logo: require("@/assets/logos-clientes/logo-kanauf.png"), highlights: [] as string[] },
+      { key: 'noria', name: "La Noria", logo: require("@/assets/logos-clientes/logo_la-noria_revistimiento.png"), highlights: [] as string[] },
+      { key: 'magimundo', name: "Magimundo", logo: require("@/assets/logos-clientes/logo_magimundo_color.png"), highlights: [] as string[] },
+      { key: 'aberturas', name: "Aberturas 3 de Febrero", logo: require("@/assets/logos-clientes/logo_abertura-3-febrero-r8_color.png"), highlights: [] as string[] },
+      { key: 'enfoque', name: "Enfoque Pop", logo: require("@/assets/logos-clientes/logo-enfoque-pop.jpg"), highlights: [] as string[] },
+      { key: 'herrajes', name: "Herrajes Mitre", logo: require("@/assets/logos-clientes/logo-herrajes-mitre.png"), highlights: [] as string[] },
+      { key: 'pintureria', name: "Pinturería San Andrés", logo: require("@/assets/logos-clientes/logo_pintureria-san-andres.png"), highlights: [] as string[] },
     ]);
 
     const FEATURED_KEYS = ['municipalidad', 'enod', 'pastoriza', 'demarco'];
+    const featuredClients = computed(() => clients.value.filter(c => FEATURED_KEYS.includes(c.key)));
+    const otherClients = computed(() => clients.value.filter(c => !FEATURED_KEYS.includes(c.key)));
 
-    const featuredClients = computed(() =>
-      clients.value.filter(c => FEATURED_KEYS.includes(c.key))
-    );
-    const otherClients = computed(() =>
-      clients.value.filter(c => !FEATURED_KEYS.includes(c.key))
-    );
+    // Observers
+    let observers: IntersectionObserver[] = [];
 
-    
-
-    // Intersection Observer para activar animaciones cuando las secciones sean visibles
-    let clientsObserver: IntersectionObserver | null = null;
-    let techObserver: IntersectionObserver | null = null;
-    let processObserver: IntersectionObserver | null = null;
-    let servicesObserver: IntersectionObserver | null = null;
-    let aiObserver: IntersectionObserver | null = null;
+    const observe = (el: HTMLElement | null, flag: { value: boolean }) => {
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        (entries) => { if (entries[0].isIntersecting) { flag.value = true; obs.disconnect(); } },
+        { threshold: 0.1 }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    };
 
     onMounted(() => {
-      // Observer para la sección de proceso
-      if (processTitle.value) {
-        processObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                isProcessVisible.value = true;
-                if (processObserver) processObserver.disconnect();
-              }
-            });
-          },
-          {
-            threshold: 0.1,
-            rootMargin: '0px 0px 0px 0px'
-          }
-        );
-        processObserver.observe(processTitle.value);
-      }
-
-      // Observer para la sección de servicios
-      if (servicesTitle.value) {
-        servicesObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                isServicesVisible.value = true;
-                // Una vez que se activa, desconectamos el observer
-                if (servicesObserver) {
-                  servicesObserver.disconnect();
-                }
-              }
-            });
-          },
-          {
-            threshold: 0.1, // Se activa cuando el 10% del título es visible
-            rootMargin: '0px 0px 0px 0px' // Se activa ni bien aparece el título
-          }
-        );
-        
-        servicesObserver.observe(servicesTitle.value);
-      }
-
-      // Observer para la sección de IA
-      if (aiTitle.value) {
-        aiObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                isAiVisible.value = true;
-                if (aiObserver) aiObserver.disconnect();
-              }
-            });
-          },
-          { threshold: 0.1 }
-        );
-        aiObserver.observe(aiTitle.value);
-      }
-
-      // Observer para la sección de clientes
-      if (clientsTitle.value) {
-        clientsObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                isVisible.value = true;
-                // Una vez que se activa, desconectamos el observer
-                if (clientsObserver) {
-                  clientsObserver.disconnect();
-                }
-              }
-            });
-          },
-          {
-            threshold: 0.1, // Se activa cuando el 10% del título es visible
-            rootMargin: '0px 0px 0px 0px' // Se activa ni bien aparece el título
-          }
-        );
-        
-        clientsObserver.observe(clientsTitle.value);
-      }
-
-      // Observer para la sección de tecnologías
-      if (techTitle.value) {
-        techObserver = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                isTechVisible.value = true;
-                // Una vez que se activa, desconectamos el observer
-                if (techObserver) {
-                  techObserver.disconnect();
-                }
-              }
-            });
-          },
-          {
-            threshold: 0.1, // Se activa cuando el 10% del título es visible
-            rootMargin: '0px 0px 0px 0px' // Se activa ni bien aparece el título
-          }
-        );
-        
-        techObserver.observe(techTitle.value);
-      }
-
+      observe(servicesTitle.value, isServicesVisible);
+      observe(aiTitle.value, isAiVisible);
+      observe(processTitle.value, isProcessVisible);
+      observe(techTitle.value, isTechVisible);
+      observe(clientsTitle.value, isVisible);
+      observe(statsRef.value, isStatsVisible);
+      observe(testimonialsRef.value, isTestimonialsVisible);
+      observe(ctaRef.value, isCtaVisible);
       window.addEventListener('scroll', handleScroll);
     });
 
     onUnmounted(() => {
-      if (clientsObserver) clientsObserver.disconnect();
-      if (techObserver) techObserver.disconnect();
-      if (processObserver) processObserver.disconnect();
-      if (servicesObserver) servicesObserver.disconnect();
-      if (aiObserver) aiObserver.disconnect();
+      observers.forEach(o => o.disconnect());
       window.removeEventListener('scroll', handleScroll);
     });
 
-    // Control del video basado en scroll
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      isVideoFixed.value = scrollY < 100; // Solo fijo cuando estás cerca del top
+      isVideoFixed.value = window.scrollY < 100;
     };
 
     return {
-      hero,
-      services,
-      processSteps,
-      technologies,
-      clients,
-      featuredClients,
-      otherClients,
-      isVisible,
-      isTechVisible,
-      isProcessVisible,
-      isServicesVisible,
-      isVideoFixed,
-      clientsTitle,
-      techTitle,
-      processTitle,
-      servicesTitle,
-      getServiceIcon,
-      getAiCaseIcon,
-      aiCaseKeys,
-      isAiVisible,
-      aiTitle,
-      handleScroll,
+      hero, services, processSteps, technologies, clients, stats, testimonials,
+      featuredClients, otherClients, aiCaseKeys,
+      isVisible, isTechVisible, isProcessVisible, isServicesVisible, isAiVisible,
+      isStatsVisible, isTestimonialsVisible, isCtaVisible, isVideoFixed,
+      clientsTitle, techTitle, processTitle, servicesTitle, aiTitle,
+      statsRef, testimonialsRef, ctaRef,
+      getServiceIcon, getAiCaseIcon, handleScroll,
     };
   },
 });
@@ -638,1006 +372,719 @@ export default defineComponent({
 
 <style scoped>
 /* =============================================
-   ANIMACIONES
+   ANIMATIONS
    ============================================= */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(18px); }
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
-@keyframes slideInLeft {
+@keyframes slideRight {
   from { opacity: 0; transform: translateX(-40px); }
   to   { opacity: 1; transform: translateX(0); }
 }
-
-@keyframes slideInFromLeft {
-  from { opacity: 0; transform: translateX(-60px); }
-  to   { opacity: 1; transform: translateX(0); }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes lineGrow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+@keyframes scrollLine {
+  0%   { transform: scaleY(0); opacity: 0; }
+  30%  { opacity: 1; }
+  100% { transform: scaleY(1); opacity: 0; }
 }
 
-@keyframes slideInFromRight {
-  from { opacity: 0; transform: translateX(60px); }
-  to   { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes techFadeIn {
-  from { opacity: 0; transform: translateY(16px) scale(0.95); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-@keyframes slideInFromLeftTech {
-  from { opacity: 0; transform: translateX(-50px) scale(0.95); }
-  to   { opacity: 1; transform: translateX(0) scale(1); }
-}
-
-@keyframes slideInFromRightTech {
-  from { opacity: 0; transform: translateX(50px) scale(0.95); }
-  to   { opacity: 1; transform: translateX(0) scale(1); }
-}
-
-@keyframes slideInFromBottom {
-  from { opacity: 0; transform: translateY(30px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Cards de servicios */
-.service-card {
+.slide-up {
   opacity: 0;
-  transform: translateY(30px);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 0.3s ease;
-  text-align: center;
-  border: 1px solid rgba(255,255,255,0.08) !important;
+  animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-
-.service-card.animate-service {
-  animation: slideInFromBottom 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.slide-right {
+  opacity: 0;
+  animation: slideRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-
-.service-card:hover {
-  transform: translateY(-4px) !important;
-  border-color: rgba(45, 212, 191, 0.3) !important;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12), 0 0 20px rgba(45, 212, 191, 0.08) !important;
-  cursor: pointer;
-  z-index: 1;
-}
-
-.service-icon {
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 16px auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(45, 212, 191, 0.1);
-  border-radius: 14px;
-  color: #2dd4bf;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.service-card:hover .service-icon {
-  background: rgba(45, 212, 191, 0.18);
-  transform: scale(1.08);
-}
-
-/* Card de IA destacada */
-.service-card--ai {
-  position: relative;
-  border-color: rgba(45, 212, 191, 0.25) !important;
-  box-shadow: 0 0 24px rgba(45, 212, 191, 0.08);
-  grid-column: span 3;
-}
-
-.service-card--ai:hover {
-  border-color: rgba(45, 212, 191, 0.5) !important;
-  box-shadow: 0 8px 32px rgba(45, 212, 191, 0.18), 0 0 24px rgba(45, 212, 191, 0.12) !important;
-}
-
-.service-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: linear-gradient(135deg, #2dd4bf, #14b8a4);
-  color: #0b0f14;
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 3px 10px;
-  border-radius: 9999px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+.fade-in {
+  animation: fadeIn 1.2s ease forwards;
 }
 
 /* =============================================
-   SECCIÓN DEDICADA DE IA
+   UTILITY
    ============================================= */
-.ai-section {
-  background: linear-gradient(170deg, #0b0f14 0%, #0c1a2e 50%, #0b0f14 100%);
-  position: relative;
-  overflow: hidden;
+.gradient-text {
+  background: linear-gradient(135deg, #2dd4bf 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.ai-section::before {
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.section { padding: 100px 0; position: relative; }
+.section--alt { background: linear-gradient(180deg, rgba(255,255,255,0.02) 0%, transparent 100%); }
+
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #2dd4bf;
+  margin-bottom: 16px;
+  position: relative;
+}
+.section-tag::before,
+.section-tag::after {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -20%;
-  width: 60%;
-  height: 200%;
-  background: radial-gradient(ellipse, rgba(45, 212, 191, 0.04) 0%, transparent 70%);
-  pointer-events: none;
+  top: 50%;
+  width: 40px;
+  height: 1px;
+  background: rgba(45, 212, 191, 0.3);
 }
+.section-tag::before { right: calc(100% + 12px); }
+.section-tag::after  { left: calc(100% + 12px); }
 
-.ai-header {
-  text-align: center;
-  max-width: 720px;
-  margin: 0 auto 48px auto;
-}
-
-.ai-title {
-  color: #ffffff;
-  font-size: clamp(1.5rem, 3vw, 2.1rem);
+.section-title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
   font-weight: 800;
-  margin-bottom: 16px;
-  opacity: 0;
-  transform: translateY(16px);
+  color: #fff;
+  margin: 0 0 16px;
+  line-height: 1.15;
 }
-
-.ai-subtitle {
-  color: rgba(255, 255, 255, 0.75);
+.section-sub {
+  color: rgba(255,255,255,0.55);
+  max-width: 600px;
+  margin: 0 auto;
   font-size: 0.95rem;
   line-height: 1.7;
-  margin: 0;
-  opacity: 0;
-  transform: translateY(16px);
 }
 
-.animate-fade-in {
-  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.ai-cases-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.ai-case-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(45, 212, 191, 0.12);
-  border-radius: var(--radius-lg);
-  padding: 28px 22px;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(30px);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.ai-case-card.animate-service {
-  animation: slideInFromBottom 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.ai-case-card:hover {
-  border-color: rgba(45, 212, 191, 0.35);
-  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.1);
-  transform: translateY(-4px);
-}
-
-.ai-case-icon {
-  width: 52px;
-  height: 52px;
-  margin: 0 auto 16px auto;
+/* =============================================
+   HERO
+   ============================================= */
+.hero {
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(45, 212, 191, 0.1);
-  border-radius: 14px;
-  color: #2dd4bf;
+  position: relative;
+  overflow: hidden;
 }
-
-.ai-case-title {
-  color: #ffffff;
-  font-size: 1rem;
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+.hero__video--fixed {
+  position: fixed;
+  width: 100vw; height: 100vh;
+}
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.6) 100%);
+  z-index: 2;
+}
+.hero__content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  max-width: 780px;
+  padding: 0 24px;
+  animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+.hero__badge {
+  display: inline-block;
+  font-size: 11px;
   font-weight: 700;
-  margin: 0 0 8px 0;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #2dd4bf;
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  padding: 6px 16px;
+  border-radius: 999px;
+  margin-bottom: 28px;
+  backdrop-filter: blur(8px);
+  background: rgba(45, 212, 191, 0.06);
+}
+.hero__title {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 20px;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.hero__sub {
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+  color: rgba(255,255,255,0.75);
+  margin: 0 0 36px;
+  line-height: 1.7;
+}
+.hero__ctas {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.hero__scroll {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+}
+.hero__scroll-line {
+  width: 1px;
+  height: 48px;
+  background: rgba(255,255,255,0.3);
+  transform-origin: top;
+  animation: scrollLine 2s ease-in-out infinite;
 }
 
-.ai-case-text {
-  color: rgba(255, 255, 255, 0.65);
-  font-size: 0.82rem;
+/* =============================================
+   BUTTONS
+   ============================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+.btn--primary {
+  background: linear-gradient(135deg, #2dd4bf, #14b8a4);
+  color: #0b0f14;
+  box-shadow: 0 0 20px rgba(45, 212, 191, 0.2);
+}
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(45, 212, 191, 0.35);
+}
+.btn--ghost {
+  background: rgba(255,255,255,0.06);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+}
+.btn--ghost:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.3);
+  transform: translateY(-2px);
+}
+.btn--lg { padding: 16px 40px; font-size: 0.95rem; }
+
+/* =============================================
+   STATS
+   ============================================= */
+.stats {
+  position: relative;
+  z-index: 4;
+  margin-top: -50px;
+  padding: 0 24px;
+}
+.stats__inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 36px 20px;
+}
+.stats__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+}
+.stats__value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stats__label {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+/* =============================================
+   BENTO GRID (SERVICES)
+   ============================================= */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.bento__card {
+  position: relative;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 28px 22px;
+  opacity: 0;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.bento__card:hover {
+  border-color: rgba(45, 212, 191, 0.2);
+  box-shadow: 0 0 30px rgba(45, 212, 191, 0.06);
+  transform: translateY(-3px);
+}
+.bento__card--hero {
+  grid-column: 1 / -1;
+  text-align: center;
+  border-color: rgba(45, 212, 191, 0.15);
+  background: linear-gradient(135deg, rgba(45,212,191,0.04) 0%, rgba(59,130,246,0.04) 100%);
+}
+.bento__card--hero:hover {
+  border-color: rgba(45, 212, 191, 0.35);
+  box-shadow: 0 0 40px rgba(45, 212, 191, 0.1);
+}
+.bento__badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: linear-gradient(135deg, #2dd4bf, #14b8a4);
+  color: #0b0f14;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.bento__icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(45, 212, 191, 0.08);
+  border-radius: 11px;
+  color: #2dd4bf;
+  margin-bottom: 14px;
+}
+.bento__card--hero .bento__icon { margin: 0 auto 14px; }
+.bento__title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 6px;
+}
+.bento__text {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
   line-height: 1.6;
   margin: 0;
 }
 
-.ai-cta-wrap {
-  text-align: center;
-  margin-top: 44px;
-  opacity: 0;
-  transform: translateY(16px);
+/* =============================================
+   AI SHOWCASE
+   ============================================= */
+.ai { overflow: hidden; }
+.ai__glow {
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(45,212,191,0.08) 0%, transparent 70%);
+  pointer-events: none;
 }
-
-.ai-cta-btn {
-  padding: 14px 36px;
-  font-size: 0.95rem;
-}
-
-.service-card h3 {
-  font-size: 1rem;
-  margin-bottom: 6px;
-}
-
-.service-card p {
-  font-size: 0.85rem;
-  line-height: 1.5;
-}
-
-/* Grid de tecnologías */
-.tech-grid {
+.ai__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 20px;
-  max-width: 1540px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 1000px;
   margin: 0 auto;
 }
-
-.tech-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 18px 14px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 12px;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-              background 0.3s ease,
-              border-color 0.3s ease;
+.ai__card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 26px 20px;
+  text-align: center;
   opacity: 0;
-  transform: translateX(-50px) scale(0.95);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
 }
-
-.tech-item.animate-tech-left {
-  animation: slideInFromLeftTech 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.ai__card:hover {
+  border-color: rgba(45,212,191,0.25);
+  box-shadow: 0 8px 24px rgba(45,212,191,0.08);
+  transform: translateY(-3px);
 }
-
-.tech-item.animate-tech-right {
-  animation: slideInFromRightTech 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.tech-item:hover {
-  transform: translateY(-4px) scale(1.05) !important;
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(45, 212, 191, 0.45);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  z-index: 1;
-}
-
-.tech-icon {
-  width: 40px;
-  height: 40px;
+.ai__card-icon {
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
-  color: rgba(255,255,255,0.75);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.tech-item:hover .tech-icon {
+  background: rgba(45,212,191,0.08);
+  border-radius: 11px;
   color: #2dd4bf;
-  transform: scale(1.12);
+  margin: 0 auto 12px;
 }
-
-.tech-name {
-  font-family: "Inter", sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  text-align: center;
+.ai__card h3 {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 6px;
+}
+.ai__card p {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
   margin: 0;
-  color: rgba(255,255,255,0.85);
-  transition: color 0.3s ease;
 }
-
-.tech-item:hover .tech-name {
-  color: #ffffff;
-}
-
-/* Animaciones genéricas */
-.animate-left {
-  animation: slideInFromLeft 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.animate-right {
-  animation: slideInFromRight 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.ai__cta {
+  text-align: center;
+  margin-top: 44px;
+  opacity: 0;
 }
 
 /* =============================================
-   SECCIÓN CLIENTES — rediseño moderno
+   PROCESS
    ============================================= */
-
-.clients-title {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+.process {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+.process__timeline { position: relative; padding-left: 40px; }
+.process__line {
+  position: absolute;
+  left: 14px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, #2dd4bf, rgba(59,130,246,0.3));
+  transform-origin: top;
+}
+.process__step {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 28px;
+  opacity: 0;
+}
+.process__step:last-child { margin-bottom: 0; }
+.process__dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(45,212,191,0.12);
+  border: 1px solid rgba(45,212,191,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: -40px;
+  z-index: 1;
+}
+.process__dot span {
+  font-size: 11px;
   font-weight: 700;
-  color: #ffffff;
-  margin: 0 0 36px;
-  text-align: center;
-  line-height: 1.2;
+  color: #2dd4bf;
+}
+.process__body h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4px;
+}
+.process__body p {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.6;
+  margin: 0;
+}
+.process__visual {
+  opacity: 0;
+}
+.process__visual img {
+  width: 100%;
+  border-radius: 16px;
 }
 
-/* Cards destacadas */
-.clients-featured-grid {
+/* =============================================
+   TECH CHIPS
+   ============================================= */
+.tech-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.tech-chip {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 999px;
+  padding: 10px 22px;
+  opacity: 0;
+  transition: border-color 0.25s, background 0.25s, transform 0.25s;
+}
+.tech-chip:hover {
+  border-color: rgba(45,212,191,0.3);
+  background: rgba(45,212,191,0.06);
+  transform: translateY(-2px);
+}
+.tech-chip__name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+}
+.tech-chip:hover .tech-chip__name { color: #2dd4bf; }
+
+/* =============================================
+   TESTIMONIALS
+   ============================================= */
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.testimonial {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
+  padding: 28px 24px;
+  opacity: 0;
+  transition: border-color 0.3s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.testimonial:hover {
+  border-color: rgba(255,255,255,0.12);
+  transform: translateY(-2px);
+}
+.testimonial__quote {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  margin: 0 0 20px;
+  font-style: italic;
+}
+.testimonial__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.testimonial__avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0b0f14;
+}
+.testimonial__author strong {
+  display: block;
+  font-size: 0.82rem;
+  color: #fff;
+}
+.testimonial__author span {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.4);
+}
+
+/* =============================================
+   CLIENTS
+   ============================================= */
+.clients-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 16px;
 }
-
 .client-card {
   display: flex;
   gap: 20px;
   align-items: flex-start;
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 14px;
   padding: 24px;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.3s ease,
-              border-color 0.3s ease;
-  box-shadow: none;
+  transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
 }
-
-.client-card--visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .client-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.08);
-  border-color: rgba(45, 212, 191, 0.3);
+  border-color: rgba(45,212,191,0.25);
+  box-shadow: 0 8px 24px rgba(45,212,191,0.06);
+  transform: translateY(-3px);
 }
-
-.client-card__logo-wrap {
+.client-card__logo {
   flex-shrink: 0;
-  width: 110px;
-  height: 80px;
+  width: 100px;
+  height: 72px;
+  background: rgba(255,255,255,0.92);
+  border-radius: 10px;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 10px;
-  padding: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
-.client-card__logo-wrap img {
+.client-card__logo img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
 }
-
-.client-card__body {
-  flex: 1;
-  min-width: 0;
-}
-
-.client-card__name {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: 1rem;
+.client-card__body h3 {
+  font-size: 0.92rem;
   font-weight: 700;
-  color: #ffffff;
-  margin: 0 0 10px 0;
-  line-height: 1.3;
+  color: #fff;
+  margin: 0 0 10px;
 }
-
-.client-card__list {
+.client-card__body ul {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
-
-.client-card__item {
+.client-card__body li {
   display: flex;
   align-items: flex-start;
   gap: 7px;
-  font-family: "Inter", sans-serif;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.76rem;
+  color: rgba(255,255,255,0.55);
   line-height: 1.5;
 }
-
-.client-card__item svg {
+.client-card__body li svg {
   flex-shrink: 0;
   margin-top: 2px;
   color: #2dd4bf;
 }
 
-/* Separador de secciones — estilo unificado */
-.clients-wall-header {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin: 36px 0 20px;
-}
-
-.clients-wall-line {
-  flex: 1;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.clients-wall-label {
-  font-family: "Inter", sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
-  white-space: nowrap;
-}
-
-/* Variante para fondos oscuros */
-.clients-wall-line--light {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.clients-wall-label--light {
-  color: rgba(255, 255, 255, 0.5);
-}
-
-/* Logo wall */
-.clients-logo-wall {
+/* Logo Wall */
+.logo-wall {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 10px;
+  margin-top: 20px;
 }
-
-.logo-tile {
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+.logo-wall__item {
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(255,255,255,0.1);
   border-radius: 12px;
-  padding: 20px 16px;
+  padding: 18px 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 96px;
+  height: 88px;
   opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
-              box-shadow 0.25s ease,
-              border-color 0.25s ease,
-              background 0.25s ease;
-  cursor: default;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
 }
-
-.logo-tile--visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.logo-tile:hover {
-  background: #ffffff;
-  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.12);
-  border-color: rgba(45, 212, 191, 0.3);
+.logo-wall__item:hover {
   transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(45,212,191,0.08);
+  border-color: rgba(45,212,191,0.25);
 }
-
-.logo-tile img {
+.logo-wall__item img {
   max-width: 85%;
-  max-height: 60px;
+  max-height: 52px;
   object-fit: contain;
-  filter: grayscale(35%) opacity(0.8);
-  transition: filter 0.25s ease, transform 0.25s ease;
+  filter: grayscale(30%) opacity(0.85);
+  transition: filter 0.25s;
 }
-
-.logo-tile:hover img {
+.logo-wall__item:hover img {
   filter: grayscale(0%) opacity(1);
-  transform: scale(1.06);
 }
 
-/* Nuestro Proceso */
-.process-section {
-  background: linear-gradient(170deg, #0b0f14 0%, #101826 50%, #0b0f14 100%);
-  padding: 80px 0;
+/* =============================================
+   CTA SECTION
+   ============================================= */
+.cta-section {
+  position: relative;
+  padding: 100px 0;
+  text-align: center;
+  overflow: hidden;
 }
-
-.process-container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 16px;
+.cta-section__glow {
+  position: absolute;
+  bottom: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(45,212,191,0.1) 0%, transparent 70%);
+  pointer-events: none;
 }
-
-.process-grid {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 48px;
-  align-items: center;
-}
-
-.process-subtitle {
-  margin: 0 0 32px 0;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.process-steps-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.process-step-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.process-step-number {
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background-color: rgba(45, 212, 191, 0.15);
-  color: #2dd4bf;
-  font-weight: 600;
-  font-size: 0.875rem;
-  flex-shrink: 0;
-}
-
-.process-step-content {
-  flex: 1;
-}
-
-.process-content {
+.cta-section__title {
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  margin: 0 0 16px;
   opacity: 0;
-  transform: translateX(-50px);
-  transition: all 0.8s ease-out;
 }
-
-.process-content.animate-left {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.process-step-title {
-  margin: 0 0 8px 0;
+.cta-section__sub {
   font-size: 1rem;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.process-step-text {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.6);
-  line-height: 1.6;
-  font-size: 0.85rem;
-}
-
-.process-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: rgba(255,255,255,0.55);
+  max-width: 500px;
+  margin: 0 auto 32px;
+  line-height: 1.7;
   opacity: 0;
-  transform: translateX(100px);
-  transition: all 0.8s ease-out;
 }
 
-.process-visual.animate-right {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.process-img {
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-lg);
-  object-fit: contain;
-}
-
+/* =============================================
+   RESPONSIVE
+   ============================================= */
 @media (max-width: 1024px) {
-  .process-grid {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-  
-  
-  .process-subtitle {
-    text-align: center;
-  }
-  
-  .process-img {
-    max-width: 500px;
-  }
+  .process { grid-template-columns: 1fr; gap: 40px; }
+  .process__visual { order: -1; }
+  .process__visual img { max-width: 500px; margin: 0 auto; display: block; }
+  .ai__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-  .process-section {
-    padding: 60px 0;
-  }
-  
-  .process-container {
-    padding: 0 20px;
-  }
-  
-  .process-grid {
-    gap: 24px;
-  }
-  
-  .process-subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 24px;
-  }
-  
-  .process-subtitle {
-    font-size: 0.95rem;
-    margin-bottom: 24px;
-  }
-  
-  .process-steps-list {
-    gap: 20px;
-  }
-  
-  .process-step-item {
-    gap: 12px;
-  }
-  
-  .process-step-number {
-    width: 28px;
-    height: 28px;
-    font-size: 0.8rem;
-  }
-  
-  .process-step-title {
-    font-size: 0.95rem;
-    margin-bottom: 6px;
-  }
-
-  .process-step-text {
-    font-size: 0.8rem;
-    line-height: 1.5;
-  }
-  
-  .process-img {
-    max-width: 400px;
-  }
+  .section { padding: 72px 0; }
+  .stats__inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .bento { grid-template-columns: repeat(2, 1fr); }
+  .bento__card--hero { grid-column: 1 / -1; }
+  .testimonials { grid-template-columns: 1fr; }
+  .clients-grid { grid-template-columns: 1fr; }
+  .logo-wall { grid-template-columns: repeat(3, 1fr); }
+  .hero__title { font-size: clamp(1.5rem, 5vw, 2rem); }
+  .process__visual img { max-width: 400px; }
 }
 
 @media (max-width: 480px) {
-  .process-section {
-    padding: 40px 0;
-  }
-  
-  .process-container {
-    padding: 0 16px;
-  }
-  
-  
-  .process-subtitle {
-    font-size: 0.9rem;
-  }
-  
-  .process-steps-list {
-    gap: 16px;
-  }
-  
-  .process-step-item {
-    gap: 10px;
-  }
-  
-  .process-step-number {
-    width: 24px;
-    height: 24px;
-    font-size: 0.75rem;
-  }
-  
-  .process-step-title {
-    font-size: 0.9rem;
-  }
-
-  .process-step-text {
-    font-size: 0.78rem;
-  }
-  
-  .process-img {
-    max-width: 320px;
-  }
-}
-
-.client-logo-caption { margin: 0 4px; font-size: 0.95rem; font-weight: 600; color: rgba(255, 255, 255, 0.7); line-height: 1.3; text-align: center; }
-
-.section h2 {
-  animation: fadeInUp 0.8s ease-out;
-}
-
-.bg-tech h2 {
-  color: #ffffff;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-@media (max-width: 768px) {
-  .services-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-  }
-  
-  .service-card {
-    padding: 16px;
-  }
-  
-  .service-card h3 {
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-  }
-
-  .service-card p {
-    font-size: 0.8rem;
-    line-height: 1.5;
-  }
-
-  .service-icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 12px;
-  }
-
-  .ai-cases-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-  }
-
-  .ai-case-card {
-    padding: 22px 18px;
-  }
-
-  .ai-case-title {
-    font-size: 0.9rem;
-  }
-
-  .ai-case-text {
-    font-size: 0.78rem;
-  }
-
-  .clients-featured-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-
-  .clients-logo-wall {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-
-  .tech-grid {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    gap: 16px;
-  }
-  
-  .tech-item {
-    padding: 16px 12px;
-  }
-  
-  .tech-item.animate-tech-left,
-  .tech-item.animate-tech-right {
-    animation: techFadeIn 0.6s ease-out forwards;
-    animation-delay: 0s !important;
-  }
-  
-  .tech-icon {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .tech-name {
-    font-size: 12px;
-  }
-  
-  .clients-list {
-    margin: 24px 0 0;
-  }
-  
-  .client-item {
-    flex-direction: column;
-    text-align: center;
-    padding: 24px;
-  }
-  
-  .client-item.animate-left,
-  .client-item.animate-right {
-    animation: fadeInUp 0.6s ease-out forwards;
-    animation-delay: 0s !important;
-  }
-  
-  .client-item:hover {
-    transform: translateY(-4px) scale(1.02);
-  }
-  
-  .client-logo {
-    width: 120px;
-    height: 80px;
-    margin-right: 0;
-    margin-bottom: 20px;
-    animation: fadeInUp 0.6s ease-out 0.2s forwards;
-  }
-  
-  .client-name {
-    font-size: 1.3rem;
-  }
-  
-  .client-description {
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .services-grid {
-    grid-template-columns: 1fr !important;
-    gap: 10px !important;
-  }
-  
-  .service-card {
-    padding: 14px;
-  }
-  
-  .service-card--ai {
-    grid-column: span 1;
-  }
-
-  .service-card h3 {
-    font-size: 0.85rem;
-  }
-
-  .service-card p {
-    font-size: 0.75rem;
-  }
-
-  .service-icon {
-    width: 44px;
-    height: 44px;
-    margin-bottom: 10px;
-  }
-
-  .ai-cases-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .ai-case-card {
-    padding: 20px 16px;
-  }
-
-  .ai-title {
-    font-size: 1.3rem;
-  }
-
-  .tech-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-  }
-  
-  .tech-item {
-    padding: 12px 8px;
-  }
-  
-  .tech-icon {
-    width: 32px;
-    height: 32px;
-  }
-  
-  .tech-name {
-    font-size: 11px;
-  }
-  
-  .clients-logo-wall {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-  }
-
-  .client-card {
-    padding: 18px;
-    gap: 16px;
-  }
-
-  .client-card__logo-wrap {
-    width: 90px;
-    height: 70px;
-  }
-
-  .hero-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .hero-btn {
-    width: 100%;
-    max-width: 280px;
-  }
-}
-
-@media (max-width: 360px) {
-  .services-grid {
-    gap: 8px !important;
-  }
-  
-  .service-card {
-    padding: 12px;
-  }
-  
-  .service-card h3 {
-    font-size: 0.8rem;
-  }
-
-  .service-card p {
-    font-size: 0.72rem;
-  }
-  
-  .service-icon {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .tech-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-  
-  .tech-item {
-    padding: 10px 6px;
-  }
-  
-  .tech-icon {
-    width: 28px;
-    height: 28px;
-  }
-  
-  .tech-name {
-    font-size: 10px;
-  }
-  
-  .clients-logo-wall {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .client-card {
-    padding: 14px;
-    gap: 12px;
-  }
-
-  .client-card__logo-wrap {
-    width: 80px;
-    height: 60px;
-  }
-}
-
-</style>
-<style scoped>
-.servicios-clave-bg {
-  background: linear-gradient(170deg, #0d1219 0%, #0f1724 50%, #0d1219 100%);
-}
-
-.clientes-bg {
-  background: linear-gradient(170deg, #0b0f14 0%, #0e1520 50%, #0b0f14 100%);
+  .section { padding: 56px 0; }
+  .container { padding: 0 16px; }
+  .stats__inner { grid-template-columns: repeat(2, 1fr); padding: 24px 16px; }
+  .stats__value { font-size: 1.4rem; }
+  .bento { grid-template-columns: 1fr; gap: 10px; }
+  .bento__card { padding: 20px 16px; }
+  .ai__grid { grid-template-columns: 1fr; }
+  .tech-grid { gap: 8px; }
+  .tech-chip { padding: 8px 16px; }
+  .logo-wall { grid-template-columns: repeat(2, 1fr); }
+  .hero__ctas { flex-direction: column; align-items: center; }
+  .btn { width: 100%; max-width: 280px; justify-content: center; }
+  .client-card { flex-direction: column; align-items: center; text-align: center; }
+  .client-card__logo { width: 80px; height: 60px; }
+  .process__visual img { max-width: 300px; }
+  .section-tag::before, .section-tag::after { width: 24px; }
 }
 </style>

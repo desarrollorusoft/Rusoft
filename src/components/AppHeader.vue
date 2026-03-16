@@ -81,9 +81,9 @@ export default defineComponent({
   z-index: 1000;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  background: rgba(255, 255, 255, 0.25);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(255, 255, 255, 0.55);
+  border-bottom: 1px solid rgba(5, 44, 89, 0.1);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
 }
 
 .app-header.scrolled {
