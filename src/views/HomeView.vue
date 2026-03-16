@@ -47,50 +47,9 @@
             </ol>
           </div>
           
-          <!-- SVG del flujo de proceso -->
+          <!-- Imagen del flujo de proceso -->
           <div class="process-visual" :class="{ 'animate-right': isProcessVisible }" :style="{ transitionDelay: isProcessVisible ? '0.3s' : '0s' }">
-            <svg viewBox="0 0 520 500" xmlns="http://www.w3.org/2000/svg" class="process-svg">
-              <defs>
-                <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity="0.08"/>
-                </filter>
-              </defs>
-              <rect x="0" y="0" width="520" height="500" rx="28" fill="#ffffff" />
-              <g stroke="#052c59" stroke-opacity=".2" stroke-width="2" fill="none">
-                <path d="M40 70 H480"/>
-                <path d="M40 140 H200 V220 H480"/>
-                <path d="M40 210 H170 V300 H480"/>
-                <path d="M40 280 H220 V380 H480"/>
-                <circle cx="140" cy="70" r="3" fill="#052c59"/>
-                <circle cx="360" cy="140" r="3" fill="#052c59"/>
-                <circle cx="430" cy="220" r="3" fill="#052c59"/>
-                <circle cx="260" cy="300" r="3" fill="#052c59"/>
-                <circle cx="140" cy="380" r="3" fill="#052c59"/>
-              </g>
-              <!-- Bloques del flujo -->
-              <g filter="url(#shadow)">
-                <g transform="translate(70,60)">
-                  <rect width="140" height="70" rx="16" fill="#ffffff" stroke="#0c2a45"/>
-                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">{{ $t('pages.home.process.svg.discovery') }}</text>
-                </g>
-                <g transform="translate(220,140)">
-                  <rect width="140" height="70" rx="16" fill="#ffffff" stroke="#0c2a45"/>
-                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">{{ $t('pages.home.process.svg.design') }}</text>
-                </g>
-                <g transform="translate(370,220)">
-                  <rect width="140" height="70" rx="16" fill="#ffffff" stroke="#0c2a45"/>
-                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">{{ $t('pages.home.process.svg.development') }}</text>
-                </g>
-                <g transform="translate(220,300)">
-                  <rect width="140" height="70" rx="16" fill="#ffffff" stroke="#0c2a45"/>
-                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">{{ $t('pages.home.process.svg.testing') }}</text>
-                </g>
-                <g transform="translate(70,380)">
-                  <rect width="140" height="70" rx="16" fill="#ffffff" stroke="#0c2a45"/>
-                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">{{ $t('pages.home.process.svg.delivery') }}</text>
-                </g>
-              </g>
-            </svg>
+            <img src="@/assets/flujo.png" alt="Flujo de proceso" class="process-img" />
           </div>
         </div>
       </div>
@@ -112,25 +71,27 @@
             margin-top: 16px;
           "
         >
-          <article 
-            v-for="(s, index) in services.items" 
-            :key="s.name" 
+          <article
+            v-for="(s, index) in services.items"
+            :key="s.name"
             class="card service-card"
-            :class="{ 
-              'animate-service': isServicesVisible 
+            :class="{
+              'animate-service': isServicesVisible,
+              'service-card--ai': s.key === 'ai'
             }"
             :style="{ animationDelay: isServicesVisible ? `${index * 0.05}s` : '0s' }"
           >
+            <span v-if="s.key === 'ai'" class="service-badge">{{ $t('pages.home.ai_section.badge') }}</span>
             <div class="service-icon">
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width="48" 
-                height="48" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                stroke-width="2" 
-                stroke-linecap="round" 
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="48"
+                height="48"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
                 stroke-linejoin="round"
                 v-html="getServiceIcon(s.key)"
               ></svg>
@@ -138,6 +99,39 @@
             <h3 style="margin-top: 0">{{ s.name }}</h3>
             <p style="opacity: 0.9">{{ s.summary }}</p>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección dedicada de IA -->
+    <section class="section ai-section">
+      <div class="container">
+        <div class="clients-wall-header clients-wall-header--light" style="margin: 0 0 40px;">
+          <div class="clients-wall-line clients-wall-line--light"></div>
+          <span ref="aiTitle" class="clients-wall-label clients-wall-label--light">{{ $t('pages.home.ai_section.badge') }}</span>
+          <div class="clients-wall-line clients-wall-line--light"></div>
+        </div>
+        <div class="ai-header">
+          <h2 class="ai-title" :class="{ 'animate-fade-in': isAiVisible }">{{ $t('pages.home.ai_section.title') }}</h2>
+          <p class="ai-subtitle" :class="{ 'animate-fade-in': isAiVisible }">{{ $t('pages.home.ai_section.subtitle') }}</p>
+        </div>
+        <div class="ai-cases-grid">
+          <div
+            v-for="(caseKey, index) in aiCaseKeys"
+            :key="caseKey"
+            class="ai-case-card"
+            :class="{ 'animate-service': isAiVisible }"
+            :style="{ animationDelay: isAiVisible ? `${index * 0.1}s` : '0s' }"
+          >
+            <div class="ai-case-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-html="getAiCaseIcon(caseKey)"></svg>
+            </div>
+            <h3 class="ai-case-title">{{ $t(`pages.home.ai_section.cases.${caseKey}.title`) }}</h3>
+            <p class="ai-case-text">{{ $t(`pages.home.ai_section.cases.${caseKey}.text`) }}</p>
+          </div>
+        </div>
+        <div class="ai-cta-wrap" :class="{ 'animate-fade-in': isAiVisible }">
+          <router-link to="/contacto" class="button-primary ai-cta-btn">{{ $t('pages.home.ai_section.cta') }}</router-link>
         </div>
       </div>
     </section>
@@ -245,8 +239,8 @@ import { defineComponent, ref, computed, onMounted, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 
 const SERVICE_KEYS = [
-  'tax', 'invoicing', 'accounts', 'stock',
-  'auditing', 'ai', 'apis', 'migration',
+  'ai', 'tax', 'invoicing', 'accounts', 'stock',
+  'auditing', 'apis', 'migration',
   'consulting', 'bi', 'mobile', 'process_audit',
 ] as const;
 
@@ -277,11 +271,25 @@ export default defineComponent({
     const isTechVisible = ref(false);
     const isProcessVisible = ref(false);
     const isServicesVisible = ref(false);
+    const isAiVisible = ref(false);
     const isVideoFixed = ref(true);
     const clientsTitle = ref<HTMLElement | null>(null);
     const techTitle = ref<HTMLElement | null>(null);
     const processTitle = ref<HTMLElement | null>(null);
     const servicesTitle = ref<HTMLElement | null>(null);
+    const aiTitle = ref<HTMLElement | null>(null);
+
+    const aiCaseKeys = ['automation', 'chatbots', 'analytics', 'integration'];
+
+    const getAiCaseIcon = (key: string) => {
+      const icons: Record<string, string> = {
+        automation: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>',
+        chatbots: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h.01M12 10h.01M16 10h.01"></path>',
+        analytics: '<path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path>',
+        integration: '<path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1 .34-4.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0-.34-4.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"></path>',
+      };
+      return icons[key] || '';
+    };
 
 
     // Función para obtener el icono de cada servicio (por clave)
@@ -475,6 +483,7 @@ export default defineComponent({
     let techObserver: IntersectionObserver | null = null;
     let processObserver: IntersectionObserver | null = null;
     let servicesObserver: IntersectionObserver | null = null;
+    let aiObserver: IntersectionObserver | null = null;
 
     onMounted(() => {
       // Observer para la sección de proceso
@@ -517,6 +526,22 @@ export default defineComponent({
         );
         
         servicesObserver.observe(servicesTitle.value);
+      }
+
+      // Observer para la sección de IA
+      if (aiTitle.value) {
+        aiObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                isAiVisible.value = true;
+                if (aiObserver) aiObserver.disconnect();
+              }
+            });
+          },
+          { threshold: 0.1 }
+        );
+        aiObserver.observe(aiTitle.value);
       }
 
       // Observer para la sección de clientes
@@ -573,6 +598,7 @@ export default defineComponent({
       if (techObserver) techObserver.disconnect();
       if (processObserver) processObserver.disconnect();
       if (servicesObserver) servicesObserver.disconnect();
+      if (aiObserver) aiObserver.disconnect();
       window.removeEventListener('scroll', handleScroll);
     });
 
@@ -600,6 +626,10 @@ export default defineComponent({
       processTitle,
       servicesTitle,
       getServiceIcon,
+      getAiCaseIcon,
+      aiCaseKeys,
+      isAiVisible,
+      aiTitle,
       handleScroll,
     };
   },
@@ -689,6 +719,148 @@ export default defineComponent({
 .service-card:hover .service-icon {
   background: rgba(45, 212, 191, 0.18);
   transform: scale(1.08);
+}
+
+/* Card de IA destacada */
+.service-card--ai {
+  position: relative;
+  border-color: rgba(45, 212, 191, 0.25) !important;
+  box-shadow: 0 0 24px rgba(45, 212, 191, 0.08);
+  grid-column: span 3;
+}
+
+.service-card--ai:hover {
+  border-color: rgba(45, 212, 191, 0.5) !important;
+  box-shadow: 0 8px 32px rgba(45, 212, 191, 0.18), 0 0 24px rgba(45, 212, 191, 0.12) !important;
+}
+
+.service-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #2dd4bf, #14b8a4);
+  color: #0b0f14;
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* =============================================
+   SECCIÓN DEDICADA DE IA
+   ============================================= */
+.ai-section {
+  background: linear-gradient(170deg, #0b0f14 0%, #0c1a2e 50%, #0b0f14 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.ai-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -20%;
+  width: 60%;
+  height: 200%;
+  background: radial-gradient(ellipse, rgba(45, 212, 191, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ai-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 48px auto;
+}
+
+.ai-title {
+  color: #ffffff;
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 800;
+  margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.ai-subtitle {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ai-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ai-case-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(45, 212, 191, 0.12);
+  border-radius: var(--radius-lg);
+  padding: 28px 22px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ai-case-card.animate-service {
+  animation: slideInFromBottom 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.ai-case-card:hover {
+  border-color: rgba(45, 212, 191, 0.35);
+  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.1);
+  transform: translateY(-4px);
+}
+
+.ai-case-icon {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 16px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(45, 212, 191, 0.1);
+  border-radius: 14px;
+  color: #2dd4bf;
+}
+
+.ai-case-title {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+}
+
+.ai-case-text {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.ai-cta-wrap {
+  text-align: center;
+  margin-top: 44px;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.ai-cta-btn {
+  padding: 14px 36px;
+  font-size: 0.95rem;
 }
 
 .service-card h3 {
@@ -792,7 +964,7 @@ export default defineComponent({
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
-  color: #0f172a;
+  color: #ffffff;
   margin: 0 0 36px;
   text-align: center;
   line-height: 1.2;
@@ -810,10 +982,10 @@ export default defineComponent({
   display: flex;
   gap: 20px;
   align-items: flex-start;
-  background: rgba(255, 255, 255, 0.88);
+  background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 24px;
   opacity: 0;
@@ -822,7 +994,7 @@ export default defineComponent({
               transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.3s ease,
               border-color 0.3s ease;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  box-shadow: none;
 }
 
 .client-card--visible {
@@ -832,8 +1004,8 @@ export default defineComponent({
 
 .client-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.1), 0 0 0 1px rgba(45,212,191,0.25);
-  border-color: rgba(45,212,191,0.35);
+  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.08);
+  border-color: rgba(45, 212, 191, 0.3);
 }
 
 .client-card__logo-wrap {
@@ -843,10 +1015,10 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 10px;
   padding: 10px;
-  border: 1px solid rgba(0,0,0,0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .client-card__logo-wrap img {
@@ -864,7 +1036,7 @@ export default defineComponent({
   font-family: "Plus Jakarta Sans", sans-serif;
   font-size: 1rem;
   font-weight: 700;
-  color: #052c59;
+  color: #ffffff;
   margin: 0 0 10px 0;
   line-height: 1.3;
 }
@@ -884,7 +1056,7 @@ export default defineComponent({
   gap: 7px;
   font-family: "Inter", sans-serif;
   font-size: 0.8rem;
-  color: #475569;
+  color: rgba(255, 255, 255, 0.6);
   line-height: 1.5;
 }
 
@@ -905,7 +1077,7 @@ export default defineComponent({
 .clients-wall-line {
   flex: 1;
   height: 1px;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .clients-wall-label {
@@ -914,7 +1086,7 @@ export default defineComponent({
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #94a3b8;
+  color: rgba(255, 255, 255, 0.45);
   white-space: nowrap;
 }
 
@@ -935,10 +1107,10 @@ export default defineComponent({
 }
 
 .logo-tile {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   padding: 20px 16px;
   display: flex;
@@ -961,9 +1133,9 @@ export default defineComponent({
 }
 
 .logo-tile:hover {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1), 0 0 0 1px rgba(45,212,191,0.25);
-  border-color: rgba(45,212,191,0.35);
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.12);
+  border-color: rgba(45, 212, 191, 0.3);
   transform: translateY(-3px);
 }
 
@@ -982,10 +1154,7 @@ export default defineComponent({
 
 /* Nuestro Proceso */
 .process-section {
-  background-image: url('@/assets/background4.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: linear-gradient(170deg, #0b0f14 0%, #101826 50%, #0b0f14 100%);
   padding: 80px 0;
 }
 
@@ -1004,7 +1173,7 @@ export default defineComponent({
 
 .process-subtitle {
   margin: 0 0 32px 0;
-  color: #475569;
+  color: rgba(255, 255, 255, 0.6);
   font-size: 1rem;
   line-height: 1.6;
 }
@@ -1031,8 +1200,8 @@ export default defineComponent({
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background-color: #052c59;
-  color: #ffffff;
+  background-color: rgba(45, 212, 191, 0.15);
+  color: #2dd4bf;
   font-weight: 600;
   font-size: 0.875rem;
   flex-shrink: 0;
@@ -1057,18 +1226,19 @@ export default defineComponent({
   margin: 0 0 8px 0;
   font-size: 1rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #ffffff;
 }
 
 .process-step-text {
   margin: 0;
-  color: #475569;
+  color: rgba(255, 255, 255, 0.6);
   line-height: 1.6;
   font-size: 0.85rem;
 }
 
 .process-visual {
   display: flex;
+  align-items: center;
   justify-content: center;
   opacity: 0;
   transform: translateX(100px);
@@ -1080,10 +1250,11 @@ export default defineComponent({
   transform: translateX(0);
 }
 
-.process-svg {
+.process-img {
   width: 100%;
-  max-width: 700px;
   height: auto;
+  border-radius: var(--radius-lg);
+  object-fit: contain;
 }
 
 @media (max-width: 1024px) {
@@ -1097,7 +1268,7 @@ export default defineComponent({
     text-align: center;
   }
   
-  .process-svg {
+  .process-img {
     max-width: 500px;
   }
 }
@@ -1149,7 +1320,7 @@ export default defineComponent({
     line-height: 1.5;
   }
   
-  .process-svg {
+  .process-img {
     max-width: 400px;
   }
 }
@@ -1190,12 +1361,12 @@ export default defineComponent({
     font-size: 0.78rem;
   }
   
-  .process-svg {
+  .process-img {
     max-width: 320px;
   }
 }
 
-.client-logo-caption { margin: 0 4px; font-size: 0.95rem; font-weight: 600; color: rgb(5, 44, 89); line-height: 1.3; text-align: center; }
+.client-logo-caption { margin: 0 4px; font-size: 0.95rem; font-weight: 600; color: rgba(255, 255, 255, 0.7); line-height: 1.3; text-align: center; }
 
 .section h2 {
   animation: fadeInUp 0.8s ease-out;
@@ -1225,13 +1396,30 @@ export default defineComponent({
     font-size: 0.8rem;
     line-height: 1.5;
   }
-  
+
   .service-icon {
     width: 48px;
     height: 48px;
     margin-bottom: 12px;
   }
-  
+
+  .ai-cases-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .ai-case-card {
+    padding: 22px 18px;
+  }
+
+  .ai-case-title {
+    font-size: 0.9rem;
+  }
+
+  .ai-case-text {
+    font-size: 0.78rem;
+  }
+
   .clients-featured-grid {
     grid-template-columns: 1fr;
     gap: 14px;
@@ -1313,6 +1501,10 @@ export default defineComponent({
     padding: 14px;
   }
   
+  .service-card--ai {
+    grid-column: span 1;
+  }
+
   .service-card h3 {
     font-size: 0.85rem;
   }
@@ -1320,13 +1512,26 @@ export default defineComponent({
   .service-card p {
     font-size: 0.75rem;
   }
-  
+
   .service-icon {
     width: 44px;
     height: 44px;
     margin-bottom: 10px;
   }
-  
+
+  .ai-cases-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .ai-case-card {
+    padding: 20px 16px;
+  }
+
+  .ai-title {
+    font-size: 1.3rem;
+  }
+
   .tech-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
@@ -1429,16 +1634,10 @@ export default defineComponent({
 </style>
 <style scoped>
 .servicios-clave-bg {
-  background-image: url('@/assets/background4.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: linear-gradient(170deg, #0d1219 0%, #0f1724 50%, #0d1219 100%);
 }
 
 .clientes-bg {
-  background-image: url('@/assets/background4.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: linear-gradient(170deg, #0b0f14 0%, #0e1520 50%, #0b0f14 100%);
 }
 </style>

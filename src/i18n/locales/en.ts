@@ -105,6 +105,30 @@ export default {
           },
         },
       },
+      ai_section: {
+        badge: 'Trending',
+        title: 'Artificial Intelligence applied to your business',
+        subtitle: 'We integrate AI into your processes to automate, predict, and scale. It\'s not the future — it\'s now.',
+        cases: {
+          automation: {
+            title: 'Intelligent Automation',
+            text: 'Automatic processing of documents, emails, and data with language models. Reduce manual tasks and human errors.',
+          },
+          chatbots: {
+            title: 'Chatbots & Assistants',
+            text: 'Conversational assistants integrated with your systems that answer questions, manage processes, and serve customers 24/7.',
+          },
+          analytics: {
+            title: 'Predictive Analytics',
+            text: 'Models that anticipate trends, detect anomalies, and optimize decisions based on your historical data.',
+          },
+          integration: {
+            title: 'LLM Integration',
+            text: 'We connect OpenAI, Claude, and other models to your workflows to boost your team\'s productivity.',
+          },
+        },
+        cta: 'I want to integrate AI',
+      },
       tech: {
         title: 'Technologies We Master',
       },

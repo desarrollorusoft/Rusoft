@@ -86,7 +86,7 @@
 
 <style scoped>
 .empresa-section {
-  background-color: #ffffff;
+  background: linear-gradient(170deg, #0b0f14 0%, #0e1520 50%, #0b0f14 100%);
   padding: 80px 0;
 }
 
@@ -112,20 +112,20 @@
 .intro-title {
   font-size: 2.25rem;
   font-weight: 800;
-  color: #0f172a;
+  color: #ffffff;
   margin: 0 0 24px 0;
 }
 
 .intro-description {
   font-size: 1.125rem;
   line-height: 1.75;
-  color: #475569;
+  color: rgba(255, 255, 255, 0.65);
   margin: 0;
 }
 
 .brand-text {
   font-weight: 600;
-  color: #052c59;
+  color: #2dd4bf;
 }
 
 .highlight-text {
@@ -143,12 +143,12 @@
 .section-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #ffffff;
   margin: 0 0 16px 0;
 }
 
 .section-text {
-  color: #475569;
+  color: rgba(255, 255, 255, 0.6);
   line-height: 1.75;
   margin: 0;
 }
@@ -156,11 +156,11 @@
 /* Quote Section */
 .quote-section {
   padding: 32px;
-  background-color: #f8fafc;
-  border-left: 4px solid #052c59;
+  background-color: rgba(255, 255, 255, 0.03);
+  border-left: 4px solid #2dd4bf;
   font-style: italic;
   font-size: 1.125rem;
-  color: #334155;
+  color: rgba(255, 255, 255, 0.7);
   max-width: 896px;
   margin: 0 auto;
   border-radius: 6px;
@@ -175,7 +175,7 @@
 .valores-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #0f172a;
+  color: #ffffff;
   margin: 0 0 32px 0;
 }
 
@@ -187,10 +187,10 @@
 
 .valor-card {
   padding: 24px;
-  background-color: #ffffff;
-  border: 1px solid rgba(0,0,0,0.07);
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: none;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.3s ease,
               border-color 0.3s ease;
@@ -198,21 +198,21 @@
 
 .valor-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1), 0 0 16px rgba(45,212,191,0.08);
-  border-color: rgba(45,212,191,0.3);
+  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.08);
+  border-color: rgba(45, 212, 191, 0.3);
 }
 
 .valor-title {
   font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 700;
   font-size: 1rem;
-  color: #052c59;
+  color: #ffffff;
   margin: 0 0 10px 0;
 }
 
 .valor-text {
   font-family: "Inter", sans-serif;
-  color: #475569;
+  color: rgba(255, 255, 255, 0.6);
   font-size: 0.875rem;
   line-height: 1.75;
   margin: 0;
@@ -228,7 +228,7 @@
 .cierre-text {
   font-size: 1.125rem;
   line-height: 1.75;
-  color: #334155;
+  color: rgba(255, 255, 255, 0.65);
   margin: 0;
 }
 

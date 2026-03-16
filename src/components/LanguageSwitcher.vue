@@ -89,14 +89,14 @@ export default defineComponent({
   color: rgb(5, 44, 89);
   cursor: pointer;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   transition: all 0.2s ease;
   white-space: nowrap;
 }
 
 .lang-btn:hover {
   background: rgba(5, 44, 89, 0.06);
-  border-color: rgba(5, 44, 89, 0.4);
+  border-color: rgba(5, 44, 89, 0.2);
 }
 
 .lang-code {
@@ -116,10 +116,10 @@ export default defineComponent({
   top: calc(100% + 6px);
   right: 0;
   min-width: 130px;
-  background: #fff;
-  border: 1px solid rgba(5, 44, 89, 0.12);
+  background: #0b0f14;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
   overflow: hidden;
   z-index: 100;
 }
@@ -134,17 +134,17 @@ export default defineComponent({
   border: none;
   cursor: pointer;
   font-size: 14px;
-  color: rgb(5, 44, 89);
+  color: rgba(255, 255, 255, 0.85);
   transition: background 0.15s ease;
   text-align: left;
 }
 
 .lang-option:hover {
-  background: rgba(5, 44, 89, 0.05);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .lang-option.active {
-  background: rgba(5, 44, 89, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   font-weight: 600;
 }
 
@@ -156,7 +156,7 @@ export default defineComponent({
 }
 
 .lang-option-label {
-  color: #555;
+  color: rgba(255, 255, 255, 0.5);
   font-size: 13px;
 }
 

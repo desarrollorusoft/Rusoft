@@ -59,8 +59,8 @@ html {
 
 body {
   margin: 0;
-  background: #f1f5f9;
-  color: var(--text-primary);
+  background: #0b0f14;
+  color: rgba(255, 255, 255, 0.9);
   font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -71,7 +71,7 @@ body {
    ============================================= */
 h1, h2, h3, h4, h5, h6 {
   font-family: "Plus Jakarta Sans", "Inter", system-ui, -apple-system, sans-serif;
-  color: var(--navy);
+  color: #ffffff;
   line-height: 1.15;
   letter-spacing: -0.02em;
   margin: 0 0 1rem 0;
@@ -94,8 +94,8 @@ p { line-height: 1.7; margin: 0 0 1rem 0; }
    FONDOS UTILITARIOS
    ============================================= */
 .bg-hero { background: transparent; }
-.bg-alt  { background: transparent; }
-.bg-tech { background-image: var(--gradient), var(--bg1); background-size: cover; background-position: center; }
+.bg-alt  { background: linear-gradient(170deg, #0d1219 0%, #0f1724 50%, #0d1219 100%); }
+.bg-tech { background: linear-gradient(170deg, #0b0f14 0%, #0c1a2e 50%, #0b0f14 100%); }
 .bg-dev  { background: transparent; }
 
 /* =============================================
@@ -151,7 +151,7 @@ p { line-height: 1.7; margin: 0 0 1rem 0; }
 
 .hero-title {
   font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.6rem, 3.5vw, 2.5rem);
   font-weight: 800;
   margin: 0 0 20px 0;
   color: #ffffff;
@@ -282,16 +282,16 @@ p { line-height: 1.7; margin: 0 0 1rem 0; }
    CARD BASE
    ============================================= */
 .card {
-  background: #ffffff;
-  border: 1px solid rgba(0,0,0,0.07);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-lg);
   padding: 18px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: none;
   transition: var(--transition-normal);
 }
 
 .card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.06);
   transform: translateY(-2px);
 }
 

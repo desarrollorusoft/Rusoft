@@ -105,6 +105,30 @@ export default {
           },
         },
       },
+      ai_section: {
+        badge: 'Trending',
+        title: 'Inteligencia Artificial aplicada a tu negocio',
+        subtitle: 'Integramos IA en tus procesos para automatizar, predecir y escalar. No es futuro, es ahora.',
+        cases: {
+          automation: {
+            title: 'Automatización Inteligente',
+            text: 'Procesamiento automático de documentos, emails y datos con modelos de lenguaje. Reducí tareas manuales y errores humanos.',
+          },
+          chatbots: {
+            title: 'Chatbots y Asistentes',
+            text: 'Asistentes conversacionales integrados a tus sistemas que resuelven consultas, gestionan trámites y atienden clientes 24/7.',
+          },
+          analytics: {
+            title: 'Análisis Predictivo',
+            text: 'Modelos que anticipan tendencias, detectan anomalías y optimizan decisiones basadas en tus datos históricos.',
+          },
+          integration: {
+            title: 'Integración con LLMs',
+            text: 'Conectamos OpenAI, Claude y otros modelos a tus flujos de trabajo para potenciar la productividad de tu equipo.',
+          },
+        },
+        cta: 'Quiero integrar IA',
+      },
       tech: {
         title: 'Tecnologías que Dominamos',
       },

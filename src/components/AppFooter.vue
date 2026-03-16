@@ -70,7 +70,7 @@ export default defineComponent({ name: "AppFooter" });
   font-family: "Inter", sans-serif;
   font-size: 11px;
   font-weight: 600;
-  color: #475569;
+  color: rgba(255, 255, 255, 0.4);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -106,7 +106,7 @@ export default defineComponent({ name: "AppFooter" });
 .copy {
   font-family: "Inter", sans-serif;
   font-size: 13px;
-  color: #475569;
+  color: rgba(255, 255, 255, 0.4);
   text-align: center;
   line-height: 1.6;
 }
