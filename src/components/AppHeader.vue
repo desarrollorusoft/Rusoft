@@ -19,15 +19,16 @@
       
       <!-- Menú de navegación -->
       <nav class="nav-menu" :class="{ 'mobile-open': isMobileMenuOpen }">
-        <router-link to="/" @click="closeMobileMenu">Inicio</router-link>
-        <router-link to="/nosotros" @click="closeMobileMenu">Nuestra empresa</router-link>
-        <router-link to="/contacto" @click="closeMobileMenu">Contacto</router-link>
-        <router-link to="/cv" @click="closeMobileMenu">Trabaja con nosotros</router-link>
+        <router-link to="/" @click="closeMobileMenu">{{ $t('nav.home') }}</router-link>
+        <router-link to="/nosotros" @click="closeMobileMenu">{{ $t('nav.about') }}</router-link>
+        <router-link to="/contacto" @click="closeMobileMenu">{{ $t('nav.contact') }}</router-link>
+        <router-link to="/cv" @click="closeMobileMenu">{{ $t('nav.careers') }}</router-link>
       </nav>
       
-      <!-- Overlay para móviles -->
-      <div 
-        class="mobile-overlay" 
+      <!-- Language switcher + Overlay para móviles -->
+      <LanguageSwitcher class="lang-switcher-header" />
+      <div
+        class="mobile-overlay"
         :class="{ 'active': isMobileMenuOpen }"
         @click="closeMobileMenu"
       ></div>
@@ -38,9 +39,11 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, onUnmounted } from "vue";
 import logo from "@/assets/logo.png";
+import LanguageSwitcher from "@/components/LanguageSwitcher.vue";
 
 export default defineComponent({
   name: "AppHeader",
+  components: { LanguageSwitcher },
   setup() {
     const isMobileMenuOpen = ref(false);
 
@@ -209,6 +212,12 @@ export default defineComponent({
 
 .mobile-overlay.active {
   opacity: 1;
+}
+
+/* Language switcher */
+.lang-switcher-header {
+  z-index: 1001;
+  flex-shrink: 0;
 }
 
 /* Efecto de transparencia dinámica */

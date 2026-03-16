@@ -1,22 +1,22 @@
-import { createI18n } from "vue-i18n";
+import { createI18n } from 'vue-i18n'
+import en from './locales/en'
+import es from './locales/es'
 
-const messages = {
-  es: {
-    // Aquí puedes agregar las traducciones en español
-    welcome: "Bienvenido",
-    // Agrega más traducciones según necesites
-  },
-  en: {
-    // Aquí puedes agregar las traducciones en inglés
-    welcome: "Welcome",
-    // Agrega más traducciones según necesites
-  },
-};
+const STORAGE_KEY = 'rusoft_lang'
+export const SUPPORTED_LOCALES = ['en', 'es'] as const
+
+function detectLocale(): string {
+  const saved = localStorage.getItem(STORAGE_KEY)
+  if (saved && (SUPPORTED_LOCALES as readonly string[]).includes(saved)) return saved
+  return 'en'
+}
 
 const i18n = createI18n({
-  locale: "es", // idioma por defecto
-  fallbackLocale: "es",
-  messages,
-});
+  locale: detectLocale(),
+  fallbackLocale: 'en',
+  messages: { en, es },
+  legacy: false,
+})
 
-export default i18n;
+export { STORAGE_KEY }
+export default i18n

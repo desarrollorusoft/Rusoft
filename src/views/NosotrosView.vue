@@ -1,73 +1,63 @@
 <template>
-  <!-- Nuestra Empresa -->
+  <!-- Nuestra Empresa / Our Company -->
   <section id="empresa" class="empresa-section">
     <div class="empresa-container">
       <div class="empresa-content">
 
         <!-- Intro -->
         <div class="intro-section">
-          <h2 class="intro-title">Nuestra Empresa</h2>
-          <p class="intro-description">
-            En <span class="brand-text">Rusoft</span> creemos que la tecnología no es un fin en sí mismo, sino un habilitador real del negocio. Diseñamos y desarrollamos software que combina <span class="highlight-text">calidad técnica</span>, foco en el <span class="highlight-text">usuario</span> y resultados <span class="highlight-text">medibles</span>. Nuestro compromiso es que cada entrega marque una diferencia tangible.
-          </p>
+          <h2 class="intro-title">{{ $t('pages.nosotros.title') }}</h2>
+          <p class="intro-description" v-html="$t('pages.nosotros.intro')"></p>
         </div>
 
         <!-- Historia + Cómo trabajamos -->
         <div class="grid-section">
           <div class="grid-item">
-            <h3 class="section-title">Nuestra historia</h3>
-            <p class="section-text">
-              Rusoft nace con una convicción simple: crear soluciones de software que la gente disfrute usar y que resuelvan problemas concretos. Crecimos junto a nuestros clientes, acompañando sus desafíos de digitalización, optimización de procesos y expansión. En ese camino consolidamos un estilo de trabajo basado en transparencia, mejora continua y cercanía: no creemos en proyectos "caja negra", sino en integrar equipos y compartir avances frecuentes.
-            </p>
+            <h3 class="section-title">{{ $t('pages.nosotros.history_title') }}</h3>
+            <p class="section-text">{{ $t('pages.nosotros.history') }}</p>
           </div>
           <div class="grid-item">
-            <h3 class="section-title">Cómo trabajamos</h3>
-            <p class="section-text">
-              Nuestra metodología combina prácticas ágiles con gestión de producto sólida. Empezamos entendiendo contexto y objetivos, hablamos con usuarios, mapeamos flujos e identificamos oportunidades. Luego prototipamos para validar temprano y construimos en ciclos cortos, entregando valor incremental con calidad técnica. Apostamos por una arquitectura mantenible, tests automatizados y monitoreo que muestra lo que realmente importa.
-            </p>
+            <h3 class="section-title">{{ $t('pages.nosotros.how_we_work_title') }}</h3>
+            <p class="section-text">{{ $t('pages.nosotros.how_we_work') }}</p>
           </div>
         </div>
 
         <!-- Cita -->
         <blockquote class="quote-section">
-          "Construimos software que se siente bien de usar y que entrega valor desde el primer release. Nuestro estándar es que cada entrega haga una diferencia real para el negocio."
+          "{{ $t('pages.nosotros.quote') }}"
         </blockquote>
 
         <!-- Qué hacemos + Equipo -->
         <div class="grid-section">
           <div class="grid-item">
-            <h3 class="section-title">Qué hacemos</h3>
-            <p class="section-text">
-              Desarrollamos sistemas a medida para distintos sectores: autogestión tributaria, facturación electrónica, control de stock, gestión de fiscalizaciones y más. También creamos aplicaciones web y móviles con foco en la experiencia de usuario, integraciones con terceros y tableros de indicadores. Nuestro diferencial está en entender el proceso de negocio detrás de cada pedido y medir impacto una vez en producción.
-            </p>
+            <h3 class="section-title">{{ $t('pages.nosotros.what_we_do_title') }}</h3>
+            <p class="section-text">{{ $t('pages.nosotros.what_we_do') }}</p>
           </div>
           <div class="grid-item">
-            <h3 class="section-title">Nuestro equipo</h3>
-            <p class="section-text">
-              Somos un equipo multidisciplinario de desarrolladores, diseñadores y especialistas en producto. Nos une la curiosidad, la colaboración y la obsesión por los detalles que elevan la experiencia. Fomentamos feedback honesto, documentación clara y aprendizaje continuo. Creemos que la mejor innovación surge de comunicación abierta, foco y autonomía para decidir.
-            </p>
+            <h3 class="section-title">{{ $t('pages.nosotros.team_title') }}</h3>
+            <p class="section-text">{{ $t('pages.nosotros.team') }}</p>
           </div>
         </div>
 
         <!-- Valores -->
         <div class="valores-section">
-          <h3 class="valores-title">Valores que nos definen</h3>
+          <h3 class="valores-title">{{ $t('pages.nosotros.values_title') }}</h3>
           <div class="valores-grid">
             <div class="valor-card">
-              <h4 class="valor-title">Transparencia</h4>
-              <p class="valor-text">Visibilidad total del trabajo, estimaciones realistas y conversaciones abiertas sobre riesgos y decisiones.</p>
+              <h4 class="valor-title">{{ $t('pages.nosotros.values.transparency_title') }}</h4>
+              <p class="valor-text">{{ $t('pages.nosotros.values.transparency') }}</p>
             </div>
             <div class="valor-card">
-              <h4 class="valor-title">Calidad pragmática</h4>
-              <p class="valor-text">Código limpio, pruebas automatizadas y monitoreo, evitando burocracia innecesaria.</p>
+              <h4 class="valor-title">{{ $t('pages.nosotros.values.quality_title') }}</h4>
+              <p class="valor-text">{{ $t('pages.nosotros.values.quality') }}</p>
             </div>
             <div class="valor-card">
-              <h4 class="valor-title">Orientación a resultados</h4>
-              <p class="valor-text">Priorizamos lo que realmente mueve la aguja del negocio y medimos el impacto de cada entrega.</p>
+              <h4 class="valor-title">{{ $t('pages.nosotros.values.results_title') }}</h4>
+              <p class="valor-text">{{ $t('pages.nosotros.values.results') }}</p>
             </div>
             <div class="valor-card">
-              <h4 class="valor-title">Empatía con el usuario</h4>
-              <p class="valor-text">Diseñamos para personas, no para especificaciones. La usabilidad es un requisito, no un adorno.</p>
+              <h4 class="valor-title">{{ $t('pages.nosotros.values.empathy_title') }}</h4>
+              <p class="valor-text">{{ $t('pages.nosotros.values.empathy') }}</p>
             </div>
           </div>
         </div>
@@ -75,24 +65,18 @@
         <!-- Compromiso + Diseño -->
         <div class="grid-section">
           <div class="grid-item">
-            <h3 class="section-title">Nuestro compromiso</h3>
-            <p class="section-text">
-              Cada proyecto es una relación de largo plazo. Acompañamos el ciclo completo: discovery, diseño, desarrollo, despliegue y evolución. Si algo puede hacerse mejor, lo proponemos. Si un objetivo cambia, nos adaptamos. Y si hay decisiones difíciles, las tomamos con datos y de la mano de nuestros clientes.
-            </p>
+            <h3 class="section-title">{{ $t('pages.nosotros.commitment_title') }}</h3>
+            <p class="section-text">{{ $t('pages.nosotros.commitment') }}</p>
           </div>
           <div class="grid-item">
-            <h3 class="section-title">Diseño y prototipado</h3>
-            <p class="section-text">
-              Diseñamos con foco en el usuario, validamos con prototipos de alta fidelidad y entregamos de forma continua. La calidad técnica y la usabilidad guían cada release.
-            </p>
+            <h3 class="section-title">{{ $t('pages.nosotros.design_title') }}</h3>
+            <p class="section-text">{{ $t('pages.nosotros.design') }}</p>
           </div>
         </div>
 
         <!-- Cierre -->
         <div class="cierre-section">
-          <p class="cierre-text">
-            Si estás pensando en iniciar un nuevo producto, modernizar sistemas o integrar herramientas, nos encantaría conversar. En <span class="brand-text">Rusoft</span> combinamos estrategia, diseño y tecnología para llevar tus ideas a producción con calidad y velocidad.
-          </p>
+          <p class="cierre-text" v-html="$t('pages.nosotros.closing')"></p>
         </div>
 
       </div>

@@ -4,15 +4,15 @@
       <div class="footer-content">
         <div class="footer-info">
           <div class="footer-item">
-            <span class="footer-label">Ubicación:</span>
-            <span class="footer-value">Gualeguaychú 2011, CABA, Argentina</span>
+            <span class="footer-label">{{ $t('footer.location_label') }}:</span>
+            <span class="footer-value">{{ $t('footer.location_value') }}</span>
           </div>
           <div class="footer-item">
-            <span class="footer-label">Email:</span>
+            <span class="footer-label">{{ $t('footer.email_label') }}:</span>
             <a href="mailto:rusoft@rusoft.com.ar" class="footer-link">rusoft@rusoft.com.ar</a>
           </div>
         </div>
-        <div class="copy">© 2025 Rusoft. Todos los derechos reservados.</div>
+        <div class="copy">{{ $t('footer.copyright') }}</div>
       </div>
     </div>
   </footer>

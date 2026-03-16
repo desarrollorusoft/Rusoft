@@ -10,11 +10,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, onMounted } from "vue";
+import { defineComponent, computed, onMounted, watch } from "vue";
 import { useStore } from "vuex";
+import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
 import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
 import Preloader from "@/components/Preloader.vue";
+import { applyRouteMeta } from "@/router";
 import "@/assets/styles/base.css";
 
 export default defineComponent({
@@ -22,16 +25,20 @@ export default defineComponent({
   components: { AppHeader, AppFooter, Preloader },
   setup() {
     const store = useStore();
+    const { locale } = useI18n();
+    const route = useRoute();
     const isLoading = computed(() => store.getters['app/isLoading']);
 
     onMounted(async () => {
-      // Inicializar el precargador cuando la app se monta
       await store.dispatch('app/initializePreloader');
     });
 
-    return {
-      isLoading
-    };
+    // Re-apply SEO meta tags when language changes
+    watch(locale, () => {
+      if (route.name) applyRouteMeta(route.name as string);
+    });
+
+    return { isLoading };
   }
 });
 </script>

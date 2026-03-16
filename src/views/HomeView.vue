@@ -12,7 +12,7 @@
             <router-link to="/contacto" class="button-secondary hero-btn">{{
               hero.primary_cta.label
             }}</router-link>
-            <a href="#servicios" class="button-secondary hero-btn">Nuestros Servicios</a>
+            <a href="#servicios" class="button-secondary hero-btn">{{ $t('pages.home.hero.cta_services') }}</a>
           </div>
         </div>
       </div>
@@ -25,43 +25,15 @@
       <div class="process-container">
         <div class="process-grid">
           <div class="process-content" :class="{ 'animate-left': isProcessVisible }">
-            <h2 ref="processTitle" class="process-title">Nuestro Proceso</h2>
-            <p class="process-subtitle">Un framework simple, iterativo y medible: del relevamiento a la entrega final.</p>
+            <h2 ref="processTitle" class="process-title">{{ $t('pages.home.process.title') }}</h2>
+            <p class="process-subtitle">{{ $t('pages.home.process.subtitle') }}</p>
 
             <ol class="process-steps-list">
-              <li class="process-step-item">
-                <span class="process-step-number">1</span>
+              <li v-for="(step, i) in processSteps" :key="i" class="process-step-item">
+                <span class="process-step-number">{{ i + 1 }}</span>
                 <div class="process-step-content">
-                  <h3 class="process-step-title">Relevamiento y Análisis</h3>
-                  <p class="process-step-text">Realizamos un análisis exhaustivo de tus necesidades, objetivos del negocio y requerimientos técnicos. Documentamos cada funcionalidad y establecemos el alcance del proyecto.</p>
-                </div>
-              </li>
-              <li class="process-step-item">
-                <span class="process-step-number">2</span>
-                <div class="process-step-content">
-                  <h3 class="process-step-title">Planificación y Diseño</h3>
-                  <p class="process-step-text">Creamos la arquitectura del sistema, diseñamos la experiencia de usuario (UX/UI) y planificamos los sprints de desarrollo. Definimos tecnologías y metodologías a utilizar.</p>
-                </div>
-              </li>
-              <li class="process-step-item">
-                <span class="process-step-number">3</span>
-                <div class="process-step-content">
-                  <h3 class="process-step-title">Desarrollo Ágil</h3>
-                  <p class="process-step-text">Implementamos el software siguiendo metodologías ágiles, con entregas incrementales y feedback continuo. Mantenemos comunicación constante durante todo el proceso.</p>
-                </div>
-              </li>
-              <li class="process-step-item">
-                <span class="process-step-number">4</span>
-                <div class="process-step-content">
-                  <h3 class="process-step-title">Testing y QA</h3>
-                  <p class="process-step-text">Ejecutamos pruebas exhaustivas: unitarias, de integración, funcionales y de rendimiento. Garantizamos la calidad y estabilidad del software antes de la entrega.</p>
-                </div>
-              </li>
-              <li class="process-step-item">
-                <span class="process-step-number">5</span>
-                <div class="process-step-content">
-                  <h3 class="process-step-title">Implementación</h3>
-                  <p class="process-step-text">Desplegamos el software en el ambiente de producción, configuramos servidores y realizamos la migración de datos si es necesario. Capacitamos a tu equipo.</p>
+                  <h3 class="process-step-title">{{ step.title }}</h3>
+                  <p class="process-step-text">{{ step.text }}</p>
                 </div>
               </li>
             </ol>
@@ -91,23 +63,23 @@
               <g filter="url(#shadow)">
                 <g transform="translate(70,60)">
                   <rect width="140" height="70" rx="16" fill="#ffffff" stroke="#0c2a45"/>
-                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">Relevamiento</text>
+                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">{{ $t('pages.home.process.svg.discovery') }}</text>
                 </g>
                 <g transform="translate(220,140)">
                   <rect width="140" height="70" rx="16" fill="#ffffff" stroke="#0c2a45"/>
-                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">Diseño</text>
+                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">{{ $t('pages.home.process.svg.design') }}</text>
                 </g>
                 <g transform="translate(370,220)">
                   <rect width="140" height="70" rx="16" fill="#ffffff" stroke="#0c2a45"/>
-                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">Desarrollo</text>
+                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">{{ $t('pages.home.process.svg.development') }}</text>
                 </g>
                 <g transform="translate(220,300)">
                   <rect width="140" height="70" rx="16" fill="#ffffff" stroke="#0c2a45"/>
-                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">Pruebas</text>
+                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">{{ $t('pages.home.process.svg.testing') }}</text>
                 </g>
                 <g transform="translate(70,380)">
                   <rect width="140" height="70" rx="16" fill="#ffffff" stroke="#0c2a45"/>
-                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">Entrega Final</text>
+                  <text x="70" y="40" text-anchor="middle" font-family="Inter,ui-sans-serif" font-size="14" fill="#0c2a45">{{ $t('pages.home.process.svg.delivery') }}</text>
                 </g>
               </g>
             </svg>
@@ -148,7 +120,7 @@
                 stroke-width="2" 
                 stroke-linecap="round" 
                 stroke-linejoin="round"
-                v-html="getServiceIcon(s.name)"
+                v-html="getServiceIcon(s.key)"
               ></svg>
             </div>
             <h3 style="margin-top: 0">{{ s.name }}</h3>
@@ -162,7 +134,7 @@
     <section class="section bg-tech">
       <div class="container">
         <h2 ref="techTitle" style="margin-top: 0; text-align: center; margin-bottom: 40px">
-          Tecnologías que Dominamos
+          {{ $t('pages.home.tech.title') }}
         </h2>
         <div class="tech-grid">
           <div 
@@ -198,7 +170,7 @@
     <section class="section clientes-bg">
       <div class="container">
         <h2 ref="clientsTitle" style="margin-top: 0; text-align: center; margin-bottom: 40px">
-          Nuestros Clientes
+          {{ $t('pages.home.clients.title') }}
         </h2>
 
         <!-- Clientes destacados -->
@@ -211,7 +183,7 @@
             :style="{ animationDelay: isVisible ? `${index * 0.15}s` : '0s' }"
           >
             <div class="client-featured-logo">
-              <img :src="client.logo" :alt="`Logo de ${client.name}`" loading="lazy" />
+              <img :src="client.logo" :alt="$t('pages.home.clients.logo_alt', { name: client.name })" loading="lazy" />
             </div>
             <div class="client-featured-info">
               <h3 class="client-featured-name">{{ client.name }}</h3>
@@ -227,13 +199,13 @@
                   </li>
                 </ul>
               </template>
-              <p v-else class="client-featured-description">{{ client.description }}</p>
+              <p v-else class="client-featured-description"></p>
             </div>
           </article>
         </div>
 
         <!-- Otros clientes (carrusel) -->
-        <h3 class="clients-subtitle">Más clientes</h3>
+        <h3 class="clients-subtitle">{{ $t('pages.home.clients.more_title') }}</h3>
         <div class="clients-carousel-container">
           <div class="clients-carousel" ref="carousel">
             <div 
@@ -247,7 +219,7 @@
                 :title="client.name"
               >
                 <div class="client-logo-only">
-                  <img :src="client.logo" :alt="`Logo de ${client.name}`" loading="lazy" />
+                  <img :src="client.logo" :alt="$t('pages.home.clients.logo_alt', { name: client.name })" loading="lazy" />
                 </div>
               </div>
             </div>
@@ -260,13 +232,37 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, onMounted, onUnmounted } from "vue";
-import { content } from "@/content/site";
+import { useI18n } from "vue-i18n";
+
+const SERVICE_KEYS = [
+  'tax', 'invoicing', 'accounts', 'stock',
+  'auditing', 'ai', 'apis', 'migration',
+  'consulting', 'bi', 'mobile', 'process_audit',
+] as const;
 
 export default defineComponent({
   name: "HomeView",
   setup() {
-    const hero = content.pages.home.hero;
-    const services = content.pages.home.services;
+    const { t, tm } = useI18n();
+
+    const hero = computed(() => ({
+      headline: t('pages.home.hero.headline'),
+      subheadline: t('pages.home.hero.subheadline'),
+      primary_cta: { label: t('pages.home.hero.cta') },
+    }));
+
+    const services = computed(() => ({
+      title: t('pages.home.services.title'),
+      items: SERVICE_KEYS.map(key => ({
+        key,
+        name: t(`pages.home.services.items.${key}.name`),
+        summary: t(`pages.home.services.items.${key}.summary`),
+      })),
+    }));
+
+    const processSteps = computed(() =>
+      tm('pages.home.process.steps') as Array<{ title: string; text: string }>
+    );
     const isVisible = ref(false);
     const isTechVisible = ref(false);
     const isProcessVisible = ref(false);
@@ -283,25 +279,25 @@ export default defineComponent({
     const itemWidth = ref(160); // Ancho de cada elemento
     const gap = ref(16); // Espacio entre elementos
     const autoPlayInterval = ref<number | null>(null);
-    const animationSpeed = ref(0.01); // Velocidad de animación en px por frame (75% más lento que la original)
+    const animationSpeed = ref(0.04); // Velocidad de animación en px por frame
 
-    // Función para obtener el icono de cada servicio
-    const getServiceIcon = (serviceName: string) => {
+    // Función para obtener el icono de cada servicio (por clave)
+    const getServiceIcon = (key: string) => {
       const icons: Record<string, string> = {
-        "Sistemas de Autogestión Tributaria": '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10,9 9,9 8,9"></polyline>',
-        "Sistemas de Facturación Electrónica": '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path>',
-        "Sistemas de Cuentas Corrientes": '<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>',
-        "Sistemas de Control de Stock": '<path d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-6"></path>',
-        "Gestión de Fiscalizaciones": '<path d="M9 12l2 2 4-4"></path><path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"></path><path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"></path><path d="M12 3c0 1-1 3-3 3s-3-2-3-3 1-3 3-3 3 2 3 3"></path><path d="M12 21c0-1 1-3 3-3s3 2 3 3-1 3-3 3-3-2-3-3"></path>',
-        "Soluciones de Inteligencia Artificial": '<path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1 .34-4.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0-.34-4.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"></path>',
-        "Desarrollo de APIs y Microservicios": '<polyline points="16,18 22,12 16,6"></polyline><polyline points="8,6 2,12 8,18"></polyline>',
-        "Migración y Modernización de Sistemas": '<path d="M3 3h18v18H3zM12 8v8M8 12h8"></path><path d="M3 3l18 18M21 3L3 21"></path>',
-        "Consultoría en Transformación Digital": '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path><circle cx="12" cy="12" r="3"></circle>',
-        "Sistemas de Business Intelligence": '<path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path><circle cx="18" cy="6" r="3"></circle>',
-        "Desarrollo de Aplicaciones Móviles": '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>',
-        "Auditoría y Optimización de Procesos": '<path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"></path><rect x="9" y="7" width="6" height="4"></rect><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>'
+        tax: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14,2 14,8 20,8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10,9 9,9 8,9"></polyline>',
+        invoicing: '<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path>',
+        accounts: '<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>',
+        stock: '<path d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m6-5v6a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-6"></path>',
+        auditing: '<path d="M9 12l2 2 4-4"></path><path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"></path><path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"></path><path d="M12 3c0 1-1 3-3 3s-3-2-3-3 1-3 3-3 3 2 3 3"></path><path d="M12 21c0-1 1-3 3-3s3 2 3 3-1 3-3 3-3-2-3-3"></path>',
+        ai: '<path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1 .34-4.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"></path><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0-.34-4.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"></path>',
+        apis: '<polyline points="16,18 22,12 16,6"></polyline><polyline points="8,6 2,12 8,18"></polyline>',
+        migration: '<path d="M3 3h18v18H3zM12 8v8M8 12h8"></path><path d="M3 3l18 18M21 3L3 21"></path>',
+        consulting: '<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path><circle cx="12" cy="12" r="3"></circle>',
+        bi: '<path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path><circle cx="18" cy="6" r="3"></circle>',
+        mobile: '<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>',
+        process_audit: '<path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"></path><rect x="9" y="7" width="6" height="4"></rect><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"></path>',
       };
-      return icons[serviceName] || '<circle cx="12" cy="12" r="10"></circle><path d="M12 16V8M8 12h8"></path>';
+      return icons[key] || '<circle cx="12" cy="12" r="10"></circle><path d="M12 16V8M8 12h8"></path>';
     };
 
     const technologies = [
@@ -379,120 +375,102 @@ export default defineComponent({
       }
     ];
 
-    const clients = [
+    const clients = computed(() => [
       {
+        key: 'municipalidad',
         name: "Municipalidad Vicente López",
         logo: require("@/assets/logos-clientes/logo-municipalidad_vicente-lopez.png"),
-        description: "Desarrollo de sistemas especializados y soporte técnico integral para la gestión de ingresos públicos, optimizando los procesos tributarios y mejorando la eficiencia en la recaudación municipal.",
-        highlights: [
-          "Sistema de autogestión tributaria para contribuyentes",
-          "Módulos de fiscalización y gestión de deudas",
-          "Tableros de seguimiento y reportes de recaudación",
-          "App móvil para contribuyentes",
-          "Plataforma integral de gestión de trámites digitales (workflow, notificaciones, seguimiento)",
-          "Backoffice operativo con roles, auditoría y reportes",
-          "Mesa de ayuda, monitoreo y mantenimiento evolutivo"
-        ]
+        highlights: tm('pages.home.clients.featured.municipalidad.highlights') as string[],
       },
       {
+        key: 'enod',
         name: "Enod",
         logo: require("@/assets/logos-clientes/logo-enod-web.jpg"),
-        description: "Desarrollo de sistema integral de gestión de ensayos e informes técnicos, incluyendo módulos para carga de informes con técnicas de ensayo especializadas, gestión de partes diarios y certificados.",
-        highlights: [
-          "Trazabilidad completa de ensayos e informes técnicos",
-          "Gestión de partes diarios y emisión de certificados",
-          "Workflow de aprobación y auditoría",
-          "Gestión de inventario y control de stock en tiempo real",
-          "Control de asistencia con validaciones y reportes",
-          "Alertas automáticas y notificaciones operativas",
-          "Operación offline con sincronización automática",
-          "Soporte técnico continuo"
-        ]
+        highlights: tm('pages.home.clients.featured.enod.highlights') as string[],
       },
       {
+        key: 'pastoriza',
         name: "La Pastoriza",
         logo: require("@/assets/logos-clientes/logo-la-pastoriza.jpg"),
-        description: "Desarrollo de sistema integrado de pesaje automático con balanza para camiones y plataforma de gestión de movimientos vehiculares, optimizando el control de carga, trazabilidad y operaciones logísticas en tiempo real.",
-        highlights: [
-          "Pesaje automático integrado con balanza de camiones",
-          "Gestión y trazabilidad de movimientos vehiculares",
-          "Alertas por desvíos de peso y anomalías",
-          "Reportes operativos en tiempo real"
-        ]
+        highlights: tm('pages.home.clients.featured.pastoriza.highlights') as string[],
       },
       {
+        key: 'demarco',
         name: "Corralón de Marco",
         logo: require("@/assets/logos-clientes/logo_de-marco-corralon.png"),
-        description: "Descripción del cliente Corralón de Marco",
-        highlights: [
-          "Gestión de stock y cuentas corrientes",
-          "Facturación electrónica y control de ventas",
-          "Indicadores de compras y rotación",
-          "Precios por lista y políticas de descuentos",
-          "Control de remitos y trazabilidad de entregas",
-          "Integración con AFIP para emisión y validación",
-          "Soporte técnico continuo"
-        ]
+        highlights: tm('pages.home.clients.featured.demarco.highlights') as string[],
       },
       {
+        key: 'prisports',
         name: "Pri Sports",
         logo: require("@/assets/logos-clientes/logo-pri-sports.jpg"),
-        description: "Desarrollo de sistema integral de gestión de jugadores, incluyendo registro de datos personales, seguimiento de rendimiento deportivo, control de fichas médicas y administración completa del plantel deportivo.",
+        highlights: [] as string[],
       },
       {
+        key: 'arz',
         name: "ARZ E HIJOS",
         logo: require("@/assets/logos-clientes/logo-sanitarios-alvarez.jpg"),
-        description: "Descripción del cliente Sanitarios Álvarez",
+        highlights: [] as string[],
       },
       {
+        key: 'demarco_seco',
         name: "De Marco contrucción en seco",
         logo: require("@/assets/logos-clientes/logo-kanauf.png"),
-        description: "Descripción del cliente Kanauf",
+        highlights: [] as string[],
       },
       {
+        key: 'noria',
         name: "La Noria",
         logo: require("@/assets/logos-clientes/logo_la-noria_revistimiento.png"),
-        description: "Descripción del cliente La Noria",
+        highlights: [] as string[],
       },
       {
+        key: 'magimundo',
         name: "Magimundo",
         logo: require("@/assets/logos-clientes/logo_magimundo_color.png"),
-        description: "Descripción del cliente Magimundo",
+        highlights: [] as string[],
       },
       {
+        key: 'aberturas',
         name: "Aberturas 3 de Febrero",
         logo: require("@/assets/logos-clientes/logo_abertura-3-febrero-r8_color.png"),
-        description: "Descripción del cliente Aberturas 3 de Febrero",
+        highlights: [] as string[],
       },
       {
+        key: 'enfoque',
         name: "Enfoque Pop",
         logo: require("@/assets/logos-clientes/logo-enfoque-pop.jpg"),
-        description: "Descripción del cliente Enfoque Pop",
+        highlights: [] as string[],
       },
       {
+        key: 'herrajes',
         name: "Herrajes Mitre",
         logo: require("@/assets/logos-clientes/logo-herrajes-mitre.png"),
-        description: "Descripción del cliente Herrajes Mitre",
+        highlights: [] as string[],
       },
       {
+        key: 'pintureria',
         name: "Pinturería San Andrés",
         logo: require("@/assets/logos-clientes/logo_pintureria-san-andres.png"),
-        description: "Descripción del cliente Pinturería San Andrés",
+        highlights: [] as string[],
       },
-    ];
+    ]);
 
-    const featuredNames = [
-      "Municipalidad Vicente López",
-      "Enod",
-      "La Pastoriza",
-      "Corralón de Marco"
-    ];
+    const FEATURED_KEYS = ['municipalidad', 'enod', 'pastoriza', 'demarco'];
 
-    const featuredClients = clients.filter(c => featuredNames.includes(c.name));
-    const otherClients = clients.filter(c => !featuredNames.includes(c.name));
-    
+    const featuredClients = computed(() =>
+      clients.value.filter(c => FEATURED_KEYS.includes(c.key))
+    );
+    const otherClients = computed(() =>
+      clients.value.filter(c => !FEATURED_KEYS.includes(c.key))
+    );
+
     // Crear carrusel infinito con múltiples copias
-    const infiniteClients = [...otherClients, ...otherClients, ...otherClients];
+    const infiniteClients = computed(() => [
+      ...otherClients.value,
+      ...otherClients.value,
+      ...otherClients.value,
+    ]);
     
     // Función para actualizar configuración del carrusel según el tamaño de pantalla
     const updateCarouselConfig = () => {
@@ -500,22 +478,22 @@ export default defineComponent({
       if (width <= 480) {
         itemWidth.value = 180;
         gap.value = 12;
-        animationSpeed.value = 0.00375; // 75% más lento que la original (era 0.015)
+        animationSpeed.value = 0.015;
       } else if (width <= 768) {
         itemWidth.value = 170;
         gap.value = 14;
-        animationSpeed.value = 0.00625; // 75% más lento que la original (era 0.025)
+        animationSpeed.value = 0.025;
       } else {
         itemWidth.value = 160;
         gap.value = 16;
-        animationSpeed.value = 0.01; // 75% más lento que la original (era 0.04)
+        animationSpeed.value = 0.04;
       }
     };
     
     // Función para animar el carrusel de forma continua
     const animateCarousel = () => {
       const totalItemWidth = itemWidth.value + gap.value;
-      const resetPosition = otherClients.length * totalItemWidth;
+      const resetPosition = otherClients.value.length * totalItemWidth;
       
       currentPosition.value += animationSpeed.value;
       
@@ -667,28 +645,29 @@ export default defineComponent({
       isVideoFixed.value = scrollY < 100; // Solo fijo cuando estás cerca del top
     };
 
-    return { 
-      hero, 
-      services, 
-      technologies, 
-      clients, 
-      featuredClients, 
-      otherClients, 
+    return {
+      hero,
+      services,
+      processSteps,
+      technologies,
+      clients,
+      featuredClients,
+      otherClients,
       infiniteClients,
-      isVisible, 
-      isTechVisible, 
-      isProcessVisible, 
-      isServicesVisible, 
-      isVideoFixed, 
-      clientsTitle, 
-      techTitle, 
-      processTitle, 
-      servicesTitle, 
-      getServiceIcon, 
+      isVisible,
+      isTechVisible,
+      isProcessVisible,
+      isServicesVisible,
+      isVideoFixed,
+      clientsTitle,
+      techTitle,
+      processTitle,
+      servicesTitle,
+      getServiceIcon,
       handleScroll,
       // Carrusel
       carousel,
-      currentPosition
+      currentPosition,
     };
   },
 });

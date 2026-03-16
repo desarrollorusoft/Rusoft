@@ -3,23 +3,23 @@
     <div class="contact-background"></div>
     <div class="contact-wrapper">
       <div class="contact-header animate-header">
-        <h1>Contacto</h1>
-        <p>Escríbenos y conversemos sobre tu proyecto.</p>
+        <h1>{{ $t('pages.contacto.title') }}</h1>
+        <p>{{ $t('pages.contacto.subtitle') }}</p>
       </div>
       <form @submit.prevent="onSubmit" class="contact-form animate-form">
         <div class="card">
-          <label>Nombre</label>
+          <label>{{ $t('pages.contacto.form.name') }}</label>
           <input v-model="name" type="text" required class="input-control" />
-          <label>Email</label>
+          <label>{{ $t('pages.contacto.form.email') }}</label>
           <input v-model="email" type="email" required class="input-control" />
-          <label>Teléfono (opcional)</label>
+          <label>{{ $t('pages.contacto.form.phone') }}</label>
           <input
             v-model="phone"
             type="tel"
-            placeholder="Ej: +54 9 11 1234-5678"
+            :placeholder="$t('pages.contacto.form.phone_placeholder')"
             class="input-control"
           />
-          <label>Mensaje</label>
+          <label>{{ $t('pages.contacto.form.message') }}</label>
           <textarea
             v-model="message"
             required
@@ -27,13 +27,13 @@
             class="input-control"
           ></textarea>
           <button class="button-primary" :disabled="loading">
-            {{ loading ? "Enviando..." : "Enviar" }}
+            {{ loading ? $t('pages.contacto.form.sending') : $t('pages.contacto.form.submit') }}
           </button>
           <p v-if="success" class="msg-success">
-            ¡Gracias! Te contactaremos pronto.
+            {{ $t('pages.contacto.form.success') }}
           </p>
           <p v-if="error" class="msg-error">
-            Ocurrió un error. Intenta nuevamente.
+            {{ $t('pages.contacto.form.error') }}
           </p>
         </div>
       </form>
@@ -319,191 +319,6 @@ label {
 }
 
 /* Responsive */
-/* Pantallas de notebook, laptop pequeñas y netbooks */
-@media (min-width: 769px) and (max-height: 900px) {
-  .contact-wrapper {
-    padding: 30px 16px 20px 16px;
-    justify-content: flex-start;
-    min-height: auto;
-  }
-  
-  .contact-header {
-    margin-bottom: 16px;
-  }
-  
-  .contact-header h1 {
-    font-size: 2rem;
-    margin-bottom: 4px;
-  }
-  
-  .contact-header p {
-    font-size: 1rem;
-  }
-  
-  .card {
-    padding: 20px;
-  }
-  
-  .input-control {
-    padding: 12px 14px;
-    font-size: 15px;
-  }
-  
-  .button-primary {
-    padding: 10px 16px;
-    font-size: 15px;
-  }
-}
-
-/* Pantallas como 1280x800 (altura hasta 800px) */
-@media (min-width: 769px) and (max-height: 800px) {
-  .contact-wrapper {
-    padding: 25px 16px 15px 16px;
-    justify-content: flex-start;
-    min-height: auto;
-  }
-  
-  .contact-header {
-    margin-bottom: 12px;
-  }
-  
-  .contact-header h1 {
-    font-size: 1.9rem;
-    margin-bottom: 3px;
-  }
-  
-  .contact-header p {
-    font-size: 0.95rem;
-  }
-  
-  .card {
-    padding: 18px;
-  }
-  
-  .input-control {
-    padding: 11px 13px;
-    font-size: 15px;
-  }
-  
-  .button-primary {
-    padding: 9px 16px;
-    font-size: 15px;
-  }
-}
-
-/* Netbooks y pantallas pequeñas (1024x600, etc.) */
-@media (min-width: 769px) and (max-height: 650px) {
-  .contact-section {
-    min-height: auto;
-    padding: 0;
-  }
-  
-  .contact-wrapper {
-    padding: 10px 16px 10px 16px;
-    justify-content: flex-start;
-    min-height: auto;
-    max-width: 600px;
-  }
-  
-  .contact-header {
-    margin-bottom: 8px;
-  }
-  
-  .contact-header h1 {
-    font-size: 1.6rem;
-    margin-bottom: 2px;
-  }
-  
-  .contact-header p {
-    font-size: 0.9rem;
-    margin: 0;
-  }
-  
-  .card {
-    padding: 16px;
-    margin: 0;
-  }
-  
-  .input-control {
-    padding: 10px 12px;
-    font-size: 14px;
-    margin-bottom: 2px;
-  }
-  
-  .button-primary {
-    padding: 8px 16px;
-    font-size: 14px;
-    margin-top: 8px;
-  }
-  
-  label {
-    font-size: 13px;
-    margin-top: 6px;
-    margin-bottom: 4px;
-  }
-  
-  textarea {
-    rows: 4;
-    min-height: 80px;
-  }
-}
-
-/* Casos extremos: pantallas muy pequeñas (1024x600 y similares) */
-@media (min-width: 769px) and (max-height: 600px) {
-  .contact-section {
-    min-height: auto;
-    padding: 0;
-  }
-  
-  .contact-wrapper {
-    padding: 5px 16px 5px 16px;
-    justify-content: flex-start;
-    min-height: auto;
-    max-width: 550px;
-  }
-  
-  .contact-header {
-    margin-bottom: 4px;
-  }
-  
-  .contact-header h1 {
-    font-size: 1.4rem;
-    margin-bottom: 0;
-  }
-  
-  .contact-header p {
-    font-size: 0.8rem;
-    margin: 0;
-  }
-  
-  .card {
-    padding: 12px;
-    margin: 0;
-  }
-  
-  .input-control {
-    padding: 8px 10px;
-    font-size: 13px;
-    margin-bottom: 1px;
-  }
-  
-  .button-primary {
-    padding: 6px 16px;
-    font-size: 13px;
-    margin-top: 6px;
-  }
-  
-  label {
-    font-size: 12px;
-    margin-top: 4px;
-    margin-bottom: 2px;
-  }
-  
-  textarea {
-    min-height: 60px;
-  }
-}
-
 @media (max-width: 768px) {
   .contact-background {
     background-attachment: scroll;
