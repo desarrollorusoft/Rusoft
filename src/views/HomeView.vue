@@ -691,6 +691,16 @@ export default defineComponent({
   transform: scale(1.08);
 }
 
+.service-card h3 {
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.service-card p {
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
 /* Grid de tecnologías */
 .tech-grid {
   display: grid;
@@ -1045,7 +1055,7 @@ export default defineComponent({
 
 .process-step-title {
   margin: 0 0 8px 0;
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 600;
   color: #0f172a;
 }
@@ -1054,7 +1064,7 @@ export default defineComponent({
   margin: 0;
   color: #475569;
   line-height: 1.6;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .process-visual {
@@ -1130,12 +1140,12 @@ export default defineComponent({
   }
   
   .process-step-title {
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin-bottom: 6px;
   }
-  
+
   .process-step-text {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     line-height: 1.5;
   }
   
@@ -1173,11 +1183,11 @@ export default defineComponent({
   }
   
   .process-step-title {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
-  
+
   .process-step-text {
-    font-size: 0.85rem;
+    font-size: 0.78rem;
   }
   
   .process-svg {
@@ -1207,12 +1217,12 @@ export default defineComponent({
   }
   
   .service-card h3 {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-bottom: 8px;
   }
-  
+
   .service-card p {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     line-height: 1.5;
   }
   
@@ -1304,11 +1314,11 @@ export default defineComponent({
   }
   
   .service-card h3 {
-    font-size: 0.95rem;
-  }
-  
-  .service-card p {
     font-size: 0.85rem;
+  }
+
+  .service-card p {
+    font-size: 0.75rem;
   }
   
   .service-icon {
@@ -1371,11 +1381,11 @@ export default defineComponent({
   }
   
   .service-card h3 {
-    font-size: 0.9rem;
-  }
-  
-  .service-card p {
     font-size: 0.8rem;
+  }
+
+  .service-card p {
+    font-size: 0.72rem;
   }
   
   .service-icon {
