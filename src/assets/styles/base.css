@@ -224,9 +224,9 @@ p { line-height: 1.7; margin: 0 0 1rem 0; }
    ============================================= */
 .button-primary {
   display: inline-block;
-  background: var(--brand);
-  color: #0b0f14;
-  border: 2px solid var(--brand);
+  background: rgb(5, 44, 89);
+  color: #ffffff;
+  border: 2px solid rgb(5, 44, 89);
   padding: 12px 24px;
   border-radius: var(--radius-md);
   font-family: "Inter", sans-serif;
@@ -239,15 +239,15 @@ p { line-height: 1.7; margin: 0 0 1rem 0; }
 }
 
 .button-primary:hover {
-  background: var(--brand-dark);
-  border-color: var(--brand-dark);
+  background: rgb(8, 55, 110);
+  border-color: rgb(8, 55, 110);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.35);
+  box-shadow: 0 8px 24px rgba(5, 44, 89, 0.45);
 }
 
 .button-primary:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(45, 212, 191, 0.2);
+  box-shadow: 0 2px 8px rgba(5, 44, 89, 0.3);
 }
 
 .button-secondary {

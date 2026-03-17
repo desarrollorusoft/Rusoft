@@ -110,14 +110,14 @@
 }
 
 .intro-title {
-  font-size: 2.25rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
   font-weight: 800;
   color: #ffffff;
   margin: 0 0 24px 0;
 }
 
 .intro-description {
-  font-size: 1.125rem;
+  font-size: 0.95rem;
   line-height: 1.75;
   color: rgba(255, 255, 255, 0.65);
   margin: 0;
@@ -141,13 +141,14 @@
 }
 
 .section-title {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   color: #ffffff;
-  margin: 0 0 16px 0;
+  margin: 0 0 12px 0;
 }
 
 .section-text {
+  font-size: 0.88rem;
   color: rgba(255, 255, 255, 0.6);
   line-height: 1.75;
   margin: 0;
@@ -155,11 +156,11 @@
 
 /* Quote Section */
 .quote-section {
-  padding: 32px;
+  padding: 28px 32px;
   background-color: rgba(255, 255, 255, 0.03);
   border-left: 4px solid #2dd4bf;
   font-style: italic;
-  font-size: 1.125rem;
+  font-size: 0.92rem;
   color: rgba(255, 255, 255, 0.7);
   max-width: 896px;
   margin: 0 auto;
@@ -173,8 +174,8 @@
 }
 
 .valores-title {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.1rem;
+  font-weight: 700;
   color: #ffffff;
   margin: 0 0 32px 0;
 }
@@ -205,7 +206,7 @@
 .valor-title {
   font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 0.88rem;
   color: #ffffff;
   margin: 0 0 10px 0;
 }
@@ -213,7 +214,7 @@
 .valor-text {
   font-family: "Inter", sans-serif;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   line-height: 1.75;
   margin: 0;
 }
@@ -226,7 +227,7 @@
 }
 
 .cierre-text {
-  font-size: 1.125rem;
+  font-size: 0.92rem;
   line-height: 1.75;
   color: rgba(255, 255, 255, 0.65);
   margin: 0;

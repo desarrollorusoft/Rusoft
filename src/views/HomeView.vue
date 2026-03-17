@@ -123,7 +123,8 @@
       </div>
     </section>
 
-    <!-- ========== TESTIMONIALS ========== -->
+    <!-- ========== TESTIMONIALS (hidden) ========== -->
+    <!--
     <section class="section" ref="testimonialsRef">
       <div class="container">
         <div class="section-header">
@@ -144,6 +145,7 @@
         </div>
       </div>
     </section>
+    -->
 
     <!-- ========== CLIENTS ========== -->
     <section class="section section--alt" ref="clientsSectionRef">
@@ -511,7 +513,7 @@ export default defineComponent({
   background: rgba(45, 212, 191, 0.06);
 }
 .hero__title {
-  font-size: clamp(1.8rem, 4vw, 3rem);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
   font-weight: 800;
   color: #fff;
   margin: 0 0 20px;
@@ -563,13 +565,14 @@ export default defineComponent({
   font-family: inherit;
 }
 .btn--primary {
-  background: linear-gradient(135deg, #2dd4bf, #14b8a4);
-  color: #0b0f14;
-  box-shadow: 0 0 20px rgba(45, 212, 191, 0.2);
+  background: rgb(5, 44, 89);
+  color: #ffffff;
+  box-shadow: 0 0 20px rgba(5, 44, 89, 0.3);
 }
 .btn--primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(45, 212, 191, 0.35);
+  box-shadow: 0 8px 30px rgba(5, 44, 89, 0.45);
+  background: rgb(8, 55, 110);
 }
 .btn--ghost {
   background: rgba(255,255,255,0.06);
@@ -975,7 +978,7 @@ export default defineComponent({
 .client-card__body li svg {
   flex-shrink: 0;
   margin-top: 2px;
-  color: #2dd4bf;
+  color: #ffffff;
 }
 
 /* Logo Wall */

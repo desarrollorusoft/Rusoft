@@ -134,10 +134,10 @@ export default {
       },
       stats: {
         label: 'En números',
-        clients: { value: '13+', label: 'Clientes' },
-        projects: { value: '30+', label: 'Proyectos entregados' },
+        clients: { value: '28+', label: 'Clientes' },
+        projects: { value: '50+', label: 'Proyectos entregados' },
         years: { value: '5+', label: 'Años de experiencia' },
-        services: { value: '12', label: 'Servicios' },
+        services: { value: '20', label: 'Servicios' },
       },
       testimonials: {
         label: 'Testimonios',
@@ -163,7 +163,7 @@ export default {
       cta: {
         label: 'Siguiente paso',
         title: '¿Tenés un proyecto en mente?',
-        subtitle: 'Contanos tu idea y en menos de 48 horas te respondemos con una propuesta.',
+        subtitle: 'Contanos tu idea y te respondemos lo antes posible con una propuesta.',
         button: 'Hablemos',
       },
       clients: {

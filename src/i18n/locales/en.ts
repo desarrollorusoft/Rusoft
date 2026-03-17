@@ -163,7 +163,7 @@ export default {
       cta: {
         label: 'Next step',
         title: 'Got a project in mind?',
-        subtitle: 'Tell us your idea and we\'ll get back to you with a proposal in less than 48 hours.',
+        subtitle: 'Tell us your idea and we\'ll get back to you with a proposal as soon as possible.',
         button: 'Let\'s talk',
       },
       clients: {
