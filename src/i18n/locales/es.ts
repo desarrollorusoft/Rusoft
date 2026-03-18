@@ -134,9 +134,9 @@ export default {
       },
       stats: {
         label: 'En números',
-        clients: { value: '28+', label: 'Clientes' },
+        clients: { value: '30+', label: 'Clientes' },
         projects: { value: '50+', label: 'Proyectos entregados' },
-        years: { value: '5+', label: 'Años de experiencia' },
+        years: { value: '15+', label: 'Años de experiencia' },
         services: { value: '20', label: 'Servicios' },
       },
       testimonials: {
