@@ -103,7 +103,7 @@
             </div>
           </div>
           <div class="process__visual" :class="{ 'slide-right': isProcessVisible }">
-            <img src="@/assets/flujo.png" alt="Flujo de proceso" />
+            <img :src="processImage" :alt="$t('pages.home.process.title')" />
           </div>
         </div>
       </div>
@@ -211,7 +211,13 @@ const SERVICE_KEYS = [
 export default defineComponent({
   name: "HomeView",
   setup() {
-    const { t, tm } = useI18n();
+    const { t, tm, locale } = useI18n();
+
+    const processImage = computed(() =>
+      locale.value === 'en'
+        ? require('@/assets/process-en.png')
+        : require('@/assets/process-es.png')
+    );
 
     const hero = computed(() => ({
       headline: t('pages.home.hero.headline'),
@@ -360,7 +366,7 @@ export default defineComponent({
     };
 
     return {
-      hero, services, processSteps, technologies, clients, stats, testimonials,
+      hero, services, processSteps, processImage, technologies, clients, stats, testimonials,
       featuredClients, otherClients, aiCaseKeys,
       isVisible, isTechVisible, isProcessVisible, isServicesVisible, isAiVisible,
       isStatsVisible, isTestimonialsVisible, isCtaVisible, isVideoFixed,
@@ -414,7 +420,7 @@ export default defineComponent({
    UTILITY
    ============================================= */
 .gradient-text {
-  background: linear-gradient(135deg, #2dd4bf 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, rgb(51, 87, 225) 0%, rgb(5, 44, 89) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -431,7 +437,7 @@ export default defineComponent({
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #2dd4bf;
+  color: rgb(51, 87, 225);
   margin-bottom: 16px;
   position: relative;
 }
@@ -442,7 +448,7 @@ export default defineComponent({
   top: 50%;
   width: 40px;
   height: 1px;
-  background: rgba(45, 212, 191, 0.3);
+  background: rgba(51, 87, 225, 0.3);
 }
 .section-tag::before { right: calc(100% + 12px); }
 .section-tag::after  { left: calc(100% + 12px); }
@@ -504,13 +510,13 @@ export default defineComponent({
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #2dd4bf;
-  border: 1px solid rgba(45, 212, 191, 0.3);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 6px 16px;
   border-radius: 999px;
   margin-bottom: 28px;
   backdrop-filter: blur(8px);
-  background: rgba(45, 212, 191, 0.06);
+  background: rgba(255, 255, 255, 0.06);
 }
 .hero__title {
   font-size: clamp(1.4rem, 3vw, 2.2rem);
@@ -617,7 +623,7 @@ export default defineComponent({
 .stats__value {
   font-size: 1.8rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #2dd4bf, #3b82f6);
+  background: linear-gradient(135deg, rgb(51, 87, 225), rgb(5, 44, 89));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -648,26 +654,26 @@ export default defineComponent({
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .bento__card:hover {
-  border-color: rgba(45, 212, 191, 0.2);
-  box-shadow: 0 0 30px rgba(45, 212, 191, 0.06);
+  border-color: rgba(51, 87, 225, 0.2);
+  box-shadow: 0 0 30px rgba(51, 87, 225, 0.06);
   transform: translateY(-3px);
 }
 .bento__card--hero {
   grid-column: 1 / -1;
   text-align: center;
-  border-color: rgba(45, 212, 191, 0.15);
-  background: linear-gradient(135deg, rgba(45,212,191,0.04) 0%, rgba(59,130,246,0.04) 100%);
+  border-color: rgba(51, 87, 225, 0.15);
+  background: linear-gradient(135deg, rgba(51,87,225,0.04) 0%, rgba(59,130,246,0.04) 100%);
 }
 .bento__card--hero:hover {
-  border-color: rgba(45, 212, 191, 0.35);
-  box-shadow: 0 0 40px rgba(45, 212, 191, 0.1);
+  border-color: rgba(51, 87, 225, 0.35);
+  box-shadow: 0 0 40px rgba(51, 87, 225, 0.1);
 }
 .bento__badge {
   position: absolute;
   top: 14px;
   right: 14px;
-  background: linear-gradient(135deg, #2dd4bf, #14b8a4);
-  color: #0b0f14;
+  background: rgb(51, 87, 225);
+  color: #ffffff;
   font-size: 10px;
   font-weight: 700;
   padding: 3px 10px;
@@ -681,9 +687,9 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(45, 212, 191, 0.08);
+  background: rgba(51, 87, 225, 0.08);
   border-radius: 11px;
-  color: #2dd4bf;
+  color: rgb(51, 87, 225);
   margin-bottom: 14px;
 }
 .bento__card--hero .bento__icon { margin: 0 auto 14px; }
@@ -731,8 +737,8 @@ export default defineComponent({
   transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
 }
 .ai__card:hover {
-  border-color: rgba(45,212,191,0.25);
-  box-shadow: 0 8px 24px rgba(45,212,191,0.08);
+  border-color: rgba(51, 87, 225, 0.25);
+  box-shadow: 0 8px 24px rgba(51, 87, 225, 0.08);
   transform: translateY(-3px);
 }
 .ai__card-icon {
@@ -741,9 +747,9 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(45,212,191,0.08);
+  background: rgba(51, 87, 225, 0.08);
   border-radius: 11px;
-  color: #2dd4bf;
+  color: rgb(51, 87, 225);
   margin: 0 auto 12px;
 }
 .ai__card h3 {
@@ -780,7 +786,7 @@ export default defineComponent({
   top: 0;
   bottom: 0;
   width: 1px;
-  background: linear-gradient(180deg, #2dd4bf, rgba(59,130,246,0.3));
+  background: linear-gradient(180deg, rgb(51, 87, 225), rgba(51, 87, 225, 0.3));
   transform-origin: top;
 }
 .process__step {
@@ -794,8 +800,8 @@ export default defineComponent({
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: rgba(45,212,191,0.12);
-  border: 1px solid rgba(45,212,191,0.3);
+  background: rgba(51, 87, 225, 0.12);
+  border: 1px solid rgba(51, 87, 225, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -806,7 +812,7 @@ export default defineComponent({
 .process__dot span {
   font-size: 11px;
   font-weight: 700;
-  color: #2dd4bf;
+  color: rgb(51, 87, 225);
 }
 .process__body h3 {
   font-size: 0.95rem;
@@ -848,8 +854,8 @@ export default defineComponent({
   transition: border-color 0.25s, background 0.25s, transform 0.25s;
 }
 .tech-chip:hover {
-  border-color: rgba(45,212,191,0.3);
-  background: rgba(45,212,191,0.06);
+  border-color: rgba(51, 87, 225, 0.3);
+  background: rgba(51, 87, 225, 0.06);
   transform: translateY(-2px);
 }
 .tech-chip__name {
@@ -857,7 +863,7 @@ export default defineComponent({
   font-weight: 600;
   color: rgba(255,255,255,0.7);
 }
-.tech-chip:hover .tech-chip__name { color: #2dd4bf; }
+.tech-chip:hover .tech-chip__name { color: rgb(51, 87, 225); }
 
 /* =============================================
    TESTIMONIALS
@@ -933,8 +939,8 @@ export default defineComponent({
   transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s cubic-bezier(0.16,1,0.3,1);
 }
 .client-card:hover {
-  border-color: rgba(45,212,191,0.25);
-  box-shadow: 0 8px 24px rgba(45,212,191,0.06);
+  border-color: rgba(51, 87, 225, 0.25);
+  box-shadow: 0 8px 24px rgba(51, 87, 225, 0.06);
   transform: translateY(-3px);
 }
 .client-card__logo {
@@ -978,7 +984,7 @@ export default defineComponent({
 .client-card__body li svg {
   flex-shrink: 0;
   margin-top: 2px;
-  color: #ffffff;
+  color: rgb(51, 87, 225);
 }
 
 /* Logo Wall */
@@ -1002,8 +1008,8 @@ export default defineComponent({
 }
 .logo-wall__item:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(45,212,191,0.08);
-  border-color: rgba(45,212,191,0.25);
+  box-shadow: 0 8px 20px rgba(51, 87, 225, 0.08);
+  border-color: rgba(51, 87, 225, 0.25);
 }
 .logo-wall__item img {
   max-width: 85%;

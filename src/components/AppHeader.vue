@@ -179,7 +179,7 @@ export default defineComponent({
   transform: translateX(-50%) scaleX(0);
   width: calc(100% - 24px);
   height: 2px;
-  background: var(--brand);
+  background: rgb(51, 87, 225);
   border-radius: 1px;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }

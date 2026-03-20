@@ -7,7 +7,7 @@ export default {
   },
   footer: {
     location_label: 'Ubicación',
-    location_value: 'Gualeguaychú 2011, CABA, Argentina',
+    location_value: 'CABA, Argentina',
     email_label: 'Email',
     copyright: '© 2025 Rusoft. Todos los derechos reservados.',
   },

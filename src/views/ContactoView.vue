@@ -207,8 +207,8 @@ label {
   margin-top: 16px;
   width: 100%;
   padding: 14px 16px;
-  background: #2dd4bf;
-  color: #0b0f14;
+  background: rgb(5, 44, 89);
+  color: #ffffff;
   border: none;
   border-radius: 8px;
   font-family: "Inter", sans-serif;
@@ -220,14 +220,14 @@ label {
 }
 
 .button-primary:hover {
-  background: #14b8a4;
+  background: rgb(8, 55, 110);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.35);
+  box-shadow: 0 8px 24px rgba(5, 44, 89, 0.35);
 }
 
 .button-primary:active {
   transform: translateY(0);
-  box-shadow: 0 2px 8px rgba(45, 212, 191, 0.2);
+  box-shadow: 0 2px 8px rgba(5, 44, 89, 0.2);
 }
 
 .button-primary:disabled {
