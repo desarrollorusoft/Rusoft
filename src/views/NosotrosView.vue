@@ -158,7 +158,7 @@
 .quote-section {
   padding: 28px 32px;
   background-color: rgba(255, 255, 255, 0.03);
-  border-left: 4px solid #2dd4bf;
+  border-left: 4px solid rgb(51, 87, 225);
   font-style: italic;
   font-size: 0.92rem;
   color: rgba(255, 255, 255, 0.7);
@@ -199,8 +199,8 @@
 
 .valor-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(45, 212, 191, 0.08);
-  border-color: rgba(45, 212, 191, 0.3);
+  box-shadow: 0 8px 24px rgba(51, 87, 225, 0.08);
+  border-color: rgba(51, 87, 225, 0.25);
 }
 
 .valor-title {
